@@ -20,12 +20,21 @@
 package com.whu.zengbin.bingocodenews.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.bean.NewsInfo;
+import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,21 +57,13 @@ public class MyStaggeredViewAdapter extends RecyclerView.Adapter<MyRecyclerViewH
   }
 
   public Context mContext;
-  public List<String> mDatas;
-  public List<Integer> mHeights;
+  public List<NewsInfo> mDatas;
   public LayoutInflater mLayoutInflater;
 
-  public MyStaggeredViewAdapter(Context mContext) {
+  public MyStaggeredViewAdapter(Context mContext, List<NewsInfo> infoList) {
     this.mContext = mContext;
     mLayoutInflater = LayoutInflater.from(mContext);
-    mDatas = new ArrayList<>();
-    mHeights = new ArrayList<>();
-    for (int i = 'A'; i <= 'z'; i++) {
-      mDatas.add((char) i + "");
-    }
-    for (int i = 0; i < mDatas.size(); i++) {
-      mHeights.add((int) (Math.random() * 300) + 200);
-    }
+    mDatas = infoList;
   }
 
   /**
@@ -70,7 +71,7 @@ public class MyStaggeredViewAdapter extends RecyclerView.Adapter<MyRecyclerViewH
    */
   @Override
   public MyRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View mView = mLayoutInflater.inflate(R.layout.item_main, parent, false);
+    View mView = mLayoutInflater.inflate(R.layout.item_photo, parent, false);
     MyRecyclerViewHolder mViewHolder = new MyRecyclerViewHolder(mView);
     return mViewHolder;
   }
@@ -96,11 +97,11 @@ public class MyStaggeredViewAdapter extends RecyclerView.Adapter<MyRecyclerViewH
         }
       });
     }
-
-    ViewGroup.LayoutParams mLayoutParams = holder.mTextView.getLayoutParams();
-    mLayoutParams.height = mHeights.get(position);
-    holder.mTextView.setLayoutParams(mLayoutParams);
-    holder.mTextView.setText(mDatas.get(position));
+    holder.mTextView.setText(mDatas.get(position).getDesc());
+    String imgurl = mDatas.get(position).getUrl() + ConstraintUtil.IMG_SUFFIX_WIDTH + 150;
+    Glide.with(mContext)
+            .load(imgurl)
+            .into(holder.mIconImg);
   }
 
   @Override

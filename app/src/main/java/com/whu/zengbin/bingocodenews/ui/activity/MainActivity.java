@@ -1,6 +1,7 @@
 package com.whu.zengbin.bingocodenews.ui.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -113,6 +114,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         // 设置FloatingActionButton的点击事件
         mFloatingActionButton.setOnClickListener(this);
+        mFloatingActionButton.setVisibility(View.GONE);
     }
 
     /**
@@ -172,7 +174,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
+            Intent intent = new Intent(this,SearchActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -180,7 +184,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     @Override public void onPageSelected(int position) {
-        mToolbar.setTitle(mTitles[position]);
+
     }
 
     @Override

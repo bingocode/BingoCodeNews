@@ -19,8 +19,10 @@
 
 package com.whu.zengbin.bingocodenews.ui.adapter;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whu.zengbin.bingocodenews.R;
@@ -31,9 +33,16 @@ import com.whu.zengbin.bingocodenews.R;
 public class MyRecyclerViewHolder extends RecyclerView.ViewHolder {
 
   public TextView mTextView;
+  public ImageView mIconImg;
+  public TextView mTimeTv;
+  public CardView mCardview;
 
   public MyRecyclerViewHolder(View itemView) {
     super(itemView);
     mTextView = (TextView) itemView.findViewById(R.id.id_textview);
+    mIconImg = (ImageView) itemView.findViewById(R.id.icon_catagory);
+    mTimeTv = (TextView) itemView.findViewById(R.id.tv_time);
+    mCardview = (CardView) itemView.findViewById(R.id.id_cardview);
+
   }
 }

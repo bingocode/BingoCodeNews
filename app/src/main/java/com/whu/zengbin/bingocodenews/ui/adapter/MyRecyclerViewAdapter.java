@@ -21,11 +21,18 @@ package com.whu.zengbin.bingocodenews.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.bean.NewsInfo;
+import com.whu.zengbin.bingocodenews.common.CommonUtil;
+import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +41,6 @@ import java.util.List;
  * Created by Monkey on 2015/6/29.
  */
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHolder> {
-
   public interface OnItemClickListener {
     void onItemClick(View view, int position);
 
@@ -48,16 +54,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
   }
 
   public Context mContext;
-  public List<String> mDatas;
+  public List<NewsInfo> mDatas;
   public LayoutInflater mLayoutInflater;
 
-  public MyRecyclerViewAdapter(Context mContext) {
+  public MyRecyclerViewAdapter(Context mContext, List<NewsInfo> infolist) {
     this.mContext = mContext;
     mLayoutInflater = LayoutInflater.from(mContext);
-    mDatas = new ArrayList<>();
-    for (int i = 'A'; i <= 'z'; i++) {
-      mDatas.add((char) i + "");
-    }
+    mDatas = infolist;
   }
 
   /**
@@ -91,12 +94,25 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
         }
       });
     }
+    holder.mTextView.setText(mDatas.get(position).getDesc());
+    holder.mTimeTv.setText(mDatas.get(position).getPublishedAt());
+    String imgurl = mDatas.get(position).getImages() + "?imageView2/0/w/180";
+    RequestOptions options = new RequestOptions();
+    int holderimg = CommonUtil.getHolderIcon(mDatas.get(position).getType());
+    options.centerCrop()
+            .placeholder(holderimg)
+            .error(holderimg)
+            .fallback(holderimg);
+    Glide.with(mContext)
+            .load(imgurl)
+            .apply(options)
+            .into(holder.mIconImg);
 
-    holder.mTextView.setText(mDatas.get(position));
   }
 
   @Override
   public int getItemCount() {
     return mDatas.size();
   }
+
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.whu.zengbin.bingocodenews">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".CodeNewsApp"
         android:allowBackup="true"
@@ -17,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.AboutActivity"></activity>
+        <activity android:name=".ui.activity.AboutActivity" />
+        <activity android:name=".ui.activity.WebviewActivity" />
+        <activity android:name=".ui.activity.SearchActivity"></activity>
     </application>
 
 </manifest>
