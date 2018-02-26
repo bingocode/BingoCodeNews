@@ -1,6 +1,7 @@
 package com.whu.zengbin.bingocodenews.ui.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+
 public class SearchActivity extends AppCompatActivity implements SearchRecycleViewAdapter.OnItemClickListener{
     private static final String TAG = "BC-SearchActivity";
     private Toolbar mToolBar;
@@ -50,8 +53,8 @@ public class SearchActivity extends AppCompatActivity implements SearchRecycleVi
     private List<NewsInfo> infolist = new ArrayList<>();
     private int page = 1;
     private ProgressBar mProgressBar;
-
-
+    private Handler handler = new Handler();
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +90,40 @@ public class SearchActivity extends AppCompatActivity implements SearchRecycleVi
         mRecyclerViewAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addOnScrollListener(new EndLessOnScrollListener(mLayoutManager) {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onLoadMore() {
-                loadResult(mSearchView.getQuery().toString(),true);
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
+                if (lastVisibleItemPosition + 1 == mRecyclerViewAdapter.getItemCount()) {
+                    Log.d("test", "loading executed");
+                    if (!isLoading) {
+                        isLoading = true;
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadResult(mSearchView.getQuery().toString(),true);
+                                Log.d("test", "load more completed");
+                                //isLoading = false;
+                            }
+                        }, 1000);
+                    }
+                }
             }
         });
+/*       new EndLessOnScrollListener(mLayoutManager) {
+        @Override
+        public void onLoadMore() {
+            loadResult(mSearchView.getQuery().toString(),true);
+        }
+    }
+    */
     }
 
 
@@ -164,11 +195,19 @@ public class SearchActivity extends AppCompatActivity implements SearchRecycleVi
     private void loadResult(String content, boolean isLoadMore) {
         if (isLoadMore) {
             Log.i(TAG,"LoadMore Log" + page);
+            if (TextUtils.isEmpty(content)) {
+                infolist.clear();
+                mProgressBar.setVisibility(View.GONE);
+                isLoading = false;
+                mRecyclerView.setVisibility(View.VISIBLE);
+                return;
+            }
             NetWorkMrg.requestNewsSearchList("all", page, content, new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     mProgressBar.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
+                    isLoading = false;
                     try {
                         JSONObject responsejson = new JSONObject(response.body().string());
                         JSONArray resultArray = responsejson.optJSONArray(ConstraintUtil.RESULTS);
@@ -176,8 +215,8 @@ public class SearchActivity extends AppCompatActivity implements SearchRecycleVi
                             NewsInfo info = new NewsInfo(resultArray.getJSONObject(i));
                             Log.i(TAG, "item " + i + info.getType());
                             infolist.add(info);
-                            mRecyclerViewAdapter.notifyDataSetChanged();
                         }
+                        mRecyclerViewAdapter.notifyDataSetChanged();
                         page++;
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -212,8 +251,8 @@ public class SearchActivity extends AppCompatActivity implements SearchRecycleVi
                             NewsInfo info = new NewsInfo(resultArray.getJSONObject(i));
                             Log.i(TAG, "item " + i + info.getType());
                             infolist.add(info);
-                            mRecyclerViewAdapter.notifyDataSetChanged();
                         }
+                        mRecyclerViewAdapter.notifyDataSetChanged();
                         page++;
                     } catch (JSONException e) {
                         e.printStackTrace();
