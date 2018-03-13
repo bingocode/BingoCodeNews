@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">BingoCodeNews</string>
-    <string name="toolbar_title">BingoCodeNews</string>
+    <string name="app_name">干货窝</string>
+    <string name="toolbar_title">干货窝</string>
+    <string name="about">关于</string>
     <string name="action_settings">settings</string>
     <string name="open">打开</string>
     <string name="close">关闭</string>
@@ -9,4 +10,10 @@
     <string name="plusone">+1</string>
     <string name="item_clicked">item clicked！</string>
     <string name="item_longclicked">item long clicked！</string>
+    <string name="about_desc_title">声明</string>
+    <string name="about_desc">本应用不定期更新android，前端方面技术干货，力推精选小视频，妹纸图，以供工作学习闲暇之时品鉴。内容主要来源于 http://gank.io/</string>
+    <string name="about_version_title">版本说明</string>
+    <string name="about_pay">欢迎支付宝打赏</string>
+    <string name="save">收藏</string>
+
 </resources>

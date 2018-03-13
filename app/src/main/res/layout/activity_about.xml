@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.whu.zengbin.bingocodenews.ui.activity.AboutActivity">
+    tools:context="com.whu.zengbin.bingocodenews.ui.activity.AboutActivity"
+    android:orientation="vertical">
     <android.support.v7.widget.Toolbar
         android:id="@+id/id_toolbar"
         android:layout_width="match_parent"
@@ -13,7 +14,101 @@
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="@string/toolbar_title"
+        app:title="@string/about"
         />
+    <android.support.v7.widget.CardView
+        android:id="@+id/desc_part"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/main_white"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="6dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+        <RelativeLayout
+            android:padding="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/desc_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_desc_title"
+                android:textColor="@color/main_blue_light"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/desc_title"
+                android:layout_marginTop="6dp"
+                android:textIsSelectable="true"
+                android:autoLink="web"
+                android:textColor="@color/main_black_grey"
+                android:text="@string/about_desc"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.CardView
+        android:id="@+id/version_part"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/main_white"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="6dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:padding="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/version_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_version_title"
+                android:textColor="@color/main_blue_light"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/version_title"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/main_black_grey"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/pay_part"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/main_white"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="6dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:padding="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/pay_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_pay"
+                android:textColor="@color/main_blue_light"
+                android:textSize="20sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

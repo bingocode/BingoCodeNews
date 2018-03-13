@@ -2,12 +2,14 @@ package com.whu.zengbin.bingocodenews.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.whu.zengbin.bingocodenews.common.CommonUtil;
 import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 import com.whu.zengbin.bingocodenews.common.SnackbarUtil;
 import com.whu.zengbin.bingocodenews.network.NetWorkMrg;
+import com.whu.zengbin.bingocodenews.ui.activity.ImagesActivity;
 import com.whu.zengbin.bingocodenews.ui.activity.WebviewActivity;
 import com.whu.zengbin.bingocodenews.ui.adapter.MyRecyclerViewAdapter;
 import com.whu.zengbin.bingocodenews.ui.adapter.MyStaggeredViewAdapter;
@@ -47,6 +50,8 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
     private int flag = 0;
     private int page = 1;
     private List<NewsInfo> infolist = new ArrayList<>();
+    private Handler handler = new Handler();
+    private boolean isLoading = false;
 
     @Nullable
     @Override
@@ -64,10 +69,24 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
 
       flag = (int) getArguments().get("flag");
       configRecyclerView();
-      loadMore(true);
       // 刷新时，指示器旋转后变化的颜色
       mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
       mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (flag != ConstraintUtil.PHOTO_FLAG ) {
+            infolist.clear();
+            page = 1;
+            loadMore(true);
+        } else {
+            if (page == 1) {
+                infolist.clear();
+                loadMore(true);
+            }
+        }
     }
 
     private void configRecyclerView() {
@@ -76,6 +95,35 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
             mRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),infolist);
             mRecyclerViewAdapter.setOnItemClickListener(this);
             mRecyclerView.setAdapter(mRecyclerViewAdapter);
+            mRecyclerViewAdapter.setIsshowLoadmore(false);
+            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    int lastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+                    if (lastVisibleItemPosition + 1 == mRecyclerViewAdapter.getItemCount()) {
+                        Log.d("test", "loading executed");
+                        if (!isLoading) {
+                            isLoading = true;
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    loadMore(true);
+                                    Log.d("test", "load more completed");
+                                    mRecyclerViewAdapter.setIsshowLoadmore(true);
+                                }
+                            }, 1000);
+                        }
+                    }
+                }
+            });
+
         } else {
             mLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
             mStaggeredAdapter = new MyStaggeredViewAdapter(getActivity(),infolist);
@@ -84,6 +132,7 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
         }
 
         mRecyclerView.setLayoutManager(mLayoutManager);
+
         }
     private void loadMore(final boolean isloadmore){
         NetWorkMrg.requestNewsInfo(CommonUtil.flagConvertStr(flag), page, new Callback<ResponseBody>() {
@@ -101,6 +150,8 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
                             infolist.add(0,info);
                         }
                         if (flag != ConstraintUtil.PHOTO_FLAG) {
+                            isLoading = false;
+                            mRecyclerViewAdapter.setIsshowLoadmore(false);
                             mRecyclerViewAdapter.notifyDataSetChanged();
                         } else {
                             mStaggeredAdapter.notifyDataSetChanged();
@@ -128,17 +179,23 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
 
     @Override
     public void onItemClick(View view, int position) {
-        //SnackbarUtil.show(mRecyclerView, getString(R.string.item_clicked), 0);
-        Intent intent = new Intent(getContext(), WebviewActivity.class);
         NewsInfo info = infolist.get(position);
-        intent.putExtra(WebviewActivity.DESC_TITLE,info.getDesc());
+        Intent intent;
         if(flag != ConstraintUtil.PHOTO_FLAG) {
+            intent = new Intent(getContext(), WebviewActivity.class);
+            intent.putExtra(WebviewActivity.DESC_TITLE,info.getDesc());
             intent.putExtra(WebviewActivity.URL_CONTENT, info.getUrl());
         } else {
-            int[] wh = CommonUtil.getScreenSize(getContext());
-            intent.putExtra(WebviewActivity.URL_CONTENT, info.getUrl() + ConstraintUtil.IMG_SUFFIX_WIDTH + wh[0]/3);
+            intent = new Intent(getContext(), ImagesActivity.class);
+            intent.putExtra(ImagesActivity.URL_IMG,info.getUrl());
+            intent.putExtra(ImagesActivity.CONTENT_TITLE,info.getDesc());
         }
         getActivity().startActivity(intent);
+
+//        else {
+//            int[] wh = CommonUtil.getScreenSize(getContext());
+//            intent.putExtra(WebviewActivity.URL_CONTENT, info.getUrl() + ConstraintUtil.IMG_SUFFIX_WIDTH + wh[0]/3);
+//        }
     }
 
     @Override

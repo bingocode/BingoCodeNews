@@ -5,14 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.R;
 
-public class WebviewActivity extends AppCompatActivity {
+public class WebviewActivity extends BaseActivity {
     public static final String DESC_TITLE = "desc_title";
     public static final String URL_CONTENT = "url_content";
+
     public static final String TAG = "BC-WebviewActivity";
     private Toolbar mToolbar;
     private WebView mWebView;
@@ -30,12 +33,21 @@ public class WebviewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mToolbar.setTitle(intent.getStringExtra(DESC_TITLE));
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         configWebView(intent.getStringExtra(URL_CONTENT));
     }
     private void configWebView(String url) {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.loadUrl(url);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return true;
     }
 
 }

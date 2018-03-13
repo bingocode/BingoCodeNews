@@ -28,7 +28,7 @@ import java.util.List;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     //初始化各种控件，照着xml中的顺序写
     private DrawerLayout mDrawerLayout;
@@ -37,7 +37,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private FloatingActionButton mFloatingActionButton;
     private NavigationView mNavigationView;
 
     // TabLayout中的tab标题
@@ -112,9 +111,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题
         mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
 
-        // 设置FloatingActionButton的点击事件
-        mFloatingActionButton.setOnClickListener(this);
-        mFloatingActionButton.setVisibility(View.GONE);
+
     }
 
     /**
@@ -126,31 +123,18 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                String msgString = "";
 
                 switch (menuItem.getItemId()) {
-                    case R.id.nav_menu_home:
-                        msgString = (String) menuItem.getTitle();
+                    case R.id.nav_menu_about:
+                        startActivity(new Intent(MainActivity.this,AboutActivity.class));
                         break;
-                    case R.id.nav_menu_categories:
-                        msgString = (String) menuItem.getTitle();
-                        break;
-                    case R.id.nav_menu_feedback:
-                        msgString = (String) menuItem.getTitle();
-                        break;
-                    case R.id.nav_menu_setting:
-                        msgString = (String) menuItem.getTitle();
+                    case R.id.nav_menu_save:
+                        startActivity(new Intent(MainActivity.this,CollectionActivity.class));
                         break;
                 }
-
                 // Menu item点击后选中，并关闭Drawerlayout
-                menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
-
-                // android-support-design兼容包中新添加的一个类似Toast的控件。
-                SnackbarUtil.show(mViewPager, msgString, 0);
-
-                return true;
+                return false;
             }
         });
     }
@@ -162,7 +146,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
         mTabLayout = (TabLayout) findViewById(R.id.id_tablayout);
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.id_floatingactionbutton);
         mNavigationView = (NavigationView) findViewById(R.id.id_navigationview);
     }
 
@@ -196,12 +179,4 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     }
 
-    @Override public void onClick(View v) {
-        switch (v.getId()) {
-            // FloatingActionButton的点击事件
-            case R.id.id_floatingactionbutton:
-                SnackbarUtil.show(v, getString(R.string.plusone), 0);
-                break;
-        }
-    }
 }

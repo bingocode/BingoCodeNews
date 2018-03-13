@@ -3,7 +3,7 @@
   <string-array name="tab_titles">
     <item>Android</item>
     <item>前端</item>
-    <item>休息视频</item>
-    <item>福利图片</item>
+    <item>短视频</item>
+    <item>福利图</item>
   </string-array>
 </resources>

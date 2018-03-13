@@ -10,6 +10,7 @@ public class ConstraintUtil {
     public static final String VIDEO = "休息视频";
     public static final String PHOTO= "福利";
     public static final String ID = "_id";
+    public static final String GANHUOID = "ganhuo_id";
     public static final String CREATEAT = "createdAt";
     public static final String DESC = "desc";
     public static final String IMAGES = "images";

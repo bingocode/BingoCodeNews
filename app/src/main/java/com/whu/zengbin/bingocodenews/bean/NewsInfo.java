@@ -1,16 +1,25 @@
 package com.whu.zengbin.bingocodenews.bean;
 
+import android.text.TextUtils;
+
 import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.Unique;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by zengbin on 2018/2/15.
  */
-
+@Entity
 public class NewsInfo {
+
+    @Id
     private String id;
     private String createdAt;
     private String desc;
@@ -107,7 +116,11 @@ public class NewsInfo {
     }
 
     public NewsInfo(JSONObject jsonObject) {
-        setId(jsonObject.optString(ConstraintUtil.ID));
+        if (TextUtils.isEmpty(jsonObject.optString(ConstraintUtil.ID))) {
+            setId(jsonObject.optString(ConstraintUtil.GANHUOID));
+        } else {
+            setId(jsonObject.optString(ConstraintUtil.ID));
+        }
         setCreatedAt(jsonObject.optString(ConstraintUtil.CREATEAT));
         setDesc(jsonObject.optString(ConstraintUtil.DESC));
         JSONArray imagesArray = jsonObject.optJSONArray(ConstraintUtil.IMAGES);
@@ -125,5 +138,21 @@ public class NewsInfo {
         setUsed(jsonObject.optBoolean(ConstraintUtil.USED));
         setWho(jsonObject.optString(ConstraintUtil.WHO));
 
+    }
+
+    @Generated(hash = 159269385)
+    public NewsInfo(String id, String createdAt, String desc, String images,
+            String publishedAt, String source, String type, String url, Boolean used,
+            String who) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.desc = desc;
+        this.images = images;
+        this.publishedAt = publishedAt;
+        this.source = source;
+        this.type = type;
+        this.url = url;
+        this.used = used;
+        this.who = who;
     }
 }

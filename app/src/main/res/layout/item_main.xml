@@ -41,21 +41,28 @@
         android:id="@+id/id_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/header_author_url"
         android:layout_toRightOf="@id/icon_catagory"
         android:layout_centerVertical="true"
-        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/main_black"
         android:textSize="16sp" />
+    <ImageView
+        android:id="@+id/img_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/tv_time"
+        android:src="@mipmap/icon_save"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentBottom="true"
+        />
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/header_author_name"
         android:textColor="@color/main_black_grey"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/id_textview"
-        android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:textSize="12sp"
