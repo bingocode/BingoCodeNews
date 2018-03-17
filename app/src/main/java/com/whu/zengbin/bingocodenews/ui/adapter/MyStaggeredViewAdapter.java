@@ -46,8 +46,6 @@ public class MyStaggeredViewAdapter extends RecyclerView.Adapter<MyRecyclerViewH
 
   public interface OnItemClickListener {
     void onItemClick(View view, int position);
-
-    void onItemLongClick(View view, int position);
   }
 
   public OnItemClickListener mOnItemClickListener;
@@ -89,13 +87,6 @@ public class MyStaggeredViewAdapter extends RecyclerView.Adapter<MyRecyclerViewH
         }
       });
 
-      holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-          mOnItemClickListener.onItemLongClick(holder.itemView, position);
-          return true;
-        }
-      });
     }
     holder.mTextView.setText(mDatas.get(position).getDesc());
     String imgurl = mDatas.get(position).getUrl() + ConstraintUtil.IMG_SUFFIX_WIDTH + 150;

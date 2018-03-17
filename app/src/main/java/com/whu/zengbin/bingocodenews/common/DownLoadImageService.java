@@ -31,84 +31,24 @@ public class DownLoadImageService implements Runnable {
     private String url;
     private Context context;
     private File currentFile;
-    public DownLoadImageService(Context context, String url) {
+    private String title;
+    public DownLoadImageService(Context context, String url,String title) {
         super();
         this.url = url;
         this.context = context;
+        this.title = title;
     }
-    private CropSquareTransformation mCropSquareTransformation= new CropSquareTransformation();
 
     @Override
     public void run() {
-        Log.i(TAG, "run");
+        Bitmap bmp = null;
         try {
-//            Picasso.get()
-//                    .load(url)
-//                    .transform(mCropSquareTransformation)
-//                    .into(bitmap);
-            Resources res = context.getResources();
-            Bitmap    bmp = BitmapFactory.decodeResource(res, R.drawable.ic_user_background);
-            saveImageToGallery(context,bmp);
-        } catch (Exception e) {
-            e.printStackTrace();
+            bmp = Picasso.get().load(url).get();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+        CommonUtil.saveImageToGallery(context,bmp,title);
     }
 
-    public void saveImageToGallery(Context context, Bitmap bmp) {
-        // 首先保存图片
-        File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsoluteFile();//注意小米手机必须这样获得public绝对路径
-        String fileName = CommonUtil.getAppName(context);
-        File appDir = new File(file ,fileName);
-        if (!appDir.exists()) {
-            appDir.mkdirs();
-        }
-        fileName = System.currentTimeMillis() + ".jpg";
-        currentFile = new File(appDir, fileName);
 
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(currentFile);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // 其次把文件插入到系统图库
-        try {
-            MediaStore.Images.Media.insertImage(context.getContentResolver(),
-                    currentFile.getAbsolutePath(), fileName, null);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // 最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                Uri.fromFile(new File(currentFile.getPath()))));
-    }
-
-    class CropSquareTransformation implements Transformation {
-        @Override public Bitmap transform(Bitmap source) {
-            Log.i(TAG, "download result null");
-            Bitmap result = Bitmap.createBitmap(source);
-            if (result != null){
-                // 在这里执行图片保存方法
-                Log.i(TAG, "download result" +result);
-                saveImageToGallery(context,result);
-            }
-            return result;
-        }
-
-        @Override public String key() { return "square()"; }
-    }
 }

@@ -19,12 +19,15 @@ import android.view.View;
 
 import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.common.PermissionUtil;
 import com.whu.zengbin.bingocodenews.common.SnackbarUtil;
 import com.whu.zengbin.bingocodenews.ui.adapter.MyViewPagerAdapter;
 import com.whu.zengbin.bingocodenews.ui.fragment.MyFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jzvd.JZVideoPlayer;
 
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
@@ -60,6 +63,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         // 对各种控件进行设置、适配、填充数据
         configViews();
+        PermissionUtil.requestionPermission(this,PermissionUtil.PERMISSION_STORAGE);
     }
 
     private void initData() {
@@ -177,6 +181,19 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (JZVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JZVideoPlayer.releaseAllVideos();
     }
 
 }

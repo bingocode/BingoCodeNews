@@ -26,12 +26,16 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.squareup.picasso.Picasso;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.common.CommonUtil;
 import com.whu.zengbin.bingocodenews.common.DownLoadImageService;
 import com.whu.zengbin.bingocodenews.common.ImageDownLoadCallBack;
+import com.whu.zengbin.bingocodenews.common.PermissionUtil;
 import com.whu.zengbin.bingocodenews.ui.view.FloatViewPager;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Struct;
 
 /**
@@ -74,7 +78,11 @@ public class ImagesActivity extends AppCompatActivity {
         mDownLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    downLoadImg(url);
+                    if(PermissionUtil.isgetPurmission(ImagesActivity.this,PermissionUtil.PERMISSION_STORAGE)) {
+                        downLoadImg(url, title);
+                    } else {
+                        PermissionUtil.requestionPermission(ImagesActivity.this,PermissionUtil.PERMISSION_STORAGE);
+                    }
             }
         });
         mViewPager.setAdapter(new PagerAdapter() {
@@ -156,10 +164,18 @@ public class ImagesActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    private void downLoadImg(String url) {
+    private void downLoadImg(String url, String title) {
         Log.i(TAG, "开始保存");
-        DownLoadImageService service = new DownLoadImageService(getApplicationContext(),
-                url);
+//        Bitmap bmp = null;
+//        try {
+//            bmp = Picasso.get().load(url).get();
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        }
+//        CommonUtil.saveImageToGallery(this,bmp,title);
+
+        DownLoadImageService service = new DownLoadImageService(this,
+                url,title);
         //启动图片下载线程
         new Thread(service).start();
     }

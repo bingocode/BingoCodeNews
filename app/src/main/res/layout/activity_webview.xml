@@ -22,4 +22,36 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="1dp" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:max="100"
+        android:progress="20"
+        style="@android:style/Widget.Material.ProgressBar.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"/>
+    <RelativeLayout
+        android:id="@+id/loadfailed_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/id_toolbar"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/img_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/notice"/>
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/img_empty"
+            android:layout_centerHorizontal="true"
+            android:text="暂无内容"/>
+    </RelativeLayout>
 </RelativeLayout>

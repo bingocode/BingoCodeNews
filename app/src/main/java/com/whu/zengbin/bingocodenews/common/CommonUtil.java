@@ -1,8 +1,12 @@
 package com.whu.zengbin.bingocodenews.common;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -11,8 +15,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.whu.zengbin.bingocodenews.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by zengbin on 2018/2/16.
@@ -123,4 +132,36 @@ public class CommonUtil {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
+
+    public static void saveImageToGallery(final Context context, Bitmap bmp, String title) {
+        // 首先保存图片
+        File appDir = new File(Environment.getExternalStorageDirectory(), CommonUtil.getAppName(context));
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = title.replace('/', '-') + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream outputStream = new FileOutputStream(file);
+            assert bmp != null;
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Uri uri = Uri.fromFile(file);
+        // 通知图库更新
+        Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+        context.sendBroadcast(scannerIntent);
+        final String msg = "图片已保存在"+
+                appDir.getAbsolutePath();
+        ThreadUtil.runOnUi(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

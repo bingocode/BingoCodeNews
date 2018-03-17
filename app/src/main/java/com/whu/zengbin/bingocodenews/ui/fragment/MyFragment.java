@@ -108,14 +108,12 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
 
                     int lastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
                     if (lastVisibleItemPosition + 1 == mRecyclerViewAdapter.getItemCount()) {
-                        Log.d("test", "loading executed");
                         if (!isLoading) {
                             isLoading = true;
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     loadMore(true);
-                                    Log.d("test", "load more completed");
                                     mRecyclerViewAdapter.setIsshowLoadmore(true);
                                 }
                             }, 1000);
@@ -191,15 +189,5 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
             intent.putExtra(ImagesActivity.CONTENT_TITLE,info.getDesc());
         }
         getActivity().startActivity(intent);
-
-//        else {
-//            int[] wh = CommonUtil.getScreenSize(getContext());
-//            intent.putExtra(WebviewActivity.URL_CONTENT, info.getUrl() + ConstraintUtil.IMG_SUFFIX_WIDTH + wh[0]/3);
-//        }
-    }
-
-    @Override
-    public void onItemLongClick(View view, int position) {
-        SnackbarUtil.show(mRecyclerView, getString(R.string.item_longclicked), 0);
     }
 }

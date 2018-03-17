@@ -21,8 +21,6 @@ package com.whu.zengbin.bingocodenews.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +33,7 @@ import com.whu.zengbin.bingocodenews.CodeNewsApp;
 import com.whu.zengbin.bingocodenews.R;
 import com.whu.zengbin.bingocodenews.bean.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.CommonUtil;
-import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -111,7 +107,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         });
       }
       final NewsInfo info = mDatas.get(position);
-      Log.i(TAG, "info id:" + info.getId() +"info desc:" + info.getDesc());
       ((MyRecyclerViewHolder)holder).mTextView.setText(info.getDesc());
       ((MyRecyclerViewHolder)holder).mTimeTv.setText(info.getPublishedAt());
       String imgurl = info.getImages() + "?imageView2/0/w/180";
