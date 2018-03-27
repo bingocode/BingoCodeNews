@@ -143,27 +143,9 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
         lpsearchbt.setMargins(0,1,10 ,1);
         AppCompatImageViewbutton.setLayoutParams(lpsearchbt);
         AppCompatImageViewbutton.setPadding(0,0,0,0);
-
-//        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
-//            @Override
-//            public boolean onClose() {
-//                Toast.makeText(getApplicationContext(), "Close", Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        });
-//
-////搜索图标按钮(打开搜索框的按钮)的点击事件
-//        mSearchView.setOnSearchClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "Open", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//搜索框文字变化监听
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.e(TAG, "TextSubmit : " + s);
                 page = 1;
                 mRecyclerView.setVisibility(View.GONE);
                 mProgressBar.setVisibility(View.VISIBLE);
@@ -173,7 +155,6 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
 
             @Override
             public boolean onQueryTextChange(String s) {
-                Log.e(TAG, "TextChange --> " + s);
                 page = 1;
                 mRecyclerView.setVisibility(View.GONE);
                 mProgressBar.setVisibility(View.VISIBLE);
@@ -232,6 +213,7 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
                 infolist.clear();
                 mProgressBar.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
+                mRecyclerViewAdapter.setIsshowLoadmore(false);
                 return;
             }
             NetWorkMrg.requestNewsSearchList("all", page, content, new Callback<ResponseBody>() {
@@ -239,6 +221,7 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     mProgressBar.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
+                    mRecyclerViewAdapter.setIsshowLoadmore(false);
                     try {
                         JSONObject responsejson = new JSONObject(response.body().string());
                         JSONArray resultArray = responsejson.optJSONArray(ConstraintUtil.RESULTS);

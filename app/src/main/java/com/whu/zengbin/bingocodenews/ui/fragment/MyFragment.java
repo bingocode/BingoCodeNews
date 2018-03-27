@@ -77,15 +77,12 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
     @Override
     public void onResume() {
         super.onResume();
-        if (flag != ConstraintUtil.PHOTO_FLAG ) {
+        if (page == 1) {
             infolist.clear();
-            page = 1;
             loadMore(true);
-        } else {
-            if (page == 1) {
-                infolist.clear();
-                loadMore(true);
-            }
+        }
+        if (mRecyclerViewAdapter != null) {
+            mRecyclerViewAdapter.notifyDataSetChanged();
         }
     }
 
@@ -165,7 +162,7 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }

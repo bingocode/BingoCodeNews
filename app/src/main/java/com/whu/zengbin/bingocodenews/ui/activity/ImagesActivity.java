@@ -26,17 +26,11 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.squareup.picasso.Picasso;
 import com.whu.zengbin.bingocodenews.R;
-import com.whu.zengbin.bingocodenews.common.CommonUtil;
 import com.whu.zengbin.bingocodenews.common.DownLoadImageService;
-import com.whu.zengbin.bingocodenews.common.ImageDownLoadCallBack;
 import com.whu.zengbin.bingocodenews.common.PermissionUtil;
 import com.whu.zengbin.bingocodenews.ui.view.FloatViewPager;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Struct;
 
 /**
  * 图集
