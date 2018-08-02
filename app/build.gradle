@@ -20,6 +20,12 @@ android {
             v1SigningEnabled true
             v2SigningEnabled true
         }
+        config {
+            keyAlias PROJ_ALIAS
+            keyPassword PROJ_kEYPASSWORD
+            storeFile file(PROJ_STORE_FILE)
+            storePassword PROJ_STOREPASSWORD
+        }
 
     }
     buildTypes {

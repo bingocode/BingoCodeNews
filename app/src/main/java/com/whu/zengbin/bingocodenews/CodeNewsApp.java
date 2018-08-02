@@ -13,7 +13,7 @@ import com.whu.zengbin.bingocodenews.common.ThreadUtil;
  */
 
 public class CodeNewsApp extends Application {
-    private static final String TAG = "CodeNewsApp";
+    private static final String TAG = "BC-CodeNewsApp";
     private static DaoSession mDaoSession;
     protected static CodeNewsApp mInstance;
     @Override
