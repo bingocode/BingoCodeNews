@@ -2,11 +2,15 @@
   <group android:checkableBehavior="single">
     <item
         android:id="@+id/nav_menu_about"
-        android:icon="@mipmap/ic_message_white_48dp"
+        android:icon="@mipmap/icon_nav_about"
         android:title="@string/about"/>
     <item
         android:id="@+id/nav_menu_save"
         android:icon="@mipmap/icon_save_nav"
         android:title="@string/save"/>
+    <item
+      android:id="@+id/nav_menu_say"
+      android:icon="@mipmap/icon_nav_talk"
+      android:title="@string/talk"/>
   </group>
 </menu>
