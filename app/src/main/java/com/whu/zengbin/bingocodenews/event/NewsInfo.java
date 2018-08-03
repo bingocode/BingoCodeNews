@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.bean;
+package com.whu.zengbin.bingocodenews.event;
 
 import android.text.TextUtils;
 
@@ -6,8 +6,6 @@ import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.NotNull;
-import org.greenrobot.greendao.annotation.Unique;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

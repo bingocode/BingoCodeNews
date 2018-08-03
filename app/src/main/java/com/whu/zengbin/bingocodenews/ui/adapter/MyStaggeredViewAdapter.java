@@ -20,23 +20,16 @@
 package com.whu.zengbin.bingocodenews.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.whu.zengbin.bingocodenews.R;
-import com.whu.zengbin.bingocodenews.bean.NewsInfo;
+import com.whu.zengbin.bingocodenews.event.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

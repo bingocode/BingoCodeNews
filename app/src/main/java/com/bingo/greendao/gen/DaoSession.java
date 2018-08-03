@@ -8,7 +8,7 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.whu.zengbin.bingocodenews.bean.NewsInfo;
+import com.whu.zengbin.bingocodenews.event.NewsInfo;
 
 import com.bingo.greendao.gen.NewsInfoDao;
 

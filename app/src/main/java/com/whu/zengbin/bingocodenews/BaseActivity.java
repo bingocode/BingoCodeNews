@@ -25,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 初始化toolbar
+     * 初始化toolbar： 标题，是否显示返回上级按钮
      * @param mToolbar
      * @param TitleResId
      * @param displayHomeAsUp

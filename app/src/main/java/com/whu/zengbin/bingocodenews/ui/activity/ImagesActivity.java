@@ -19,12 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.whu.zengbin.bingocodenews.R;
 import com.whu.zengbin.bingocodenews.common.DownLoadImageService;
@@ -160,14 +157,6 @@ public class ImagesActivity extends AppCompatActivity {
 
     private void downLoadImg(String url, String title) {
         Log.i(TAG, "开始保存");
-//        Bitmap bmp = null;
-//        try {
-//            bmp = Picasso.get().load(url).get();
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
-//        CommonUtil.saveImageToGallery(this,bmp,title);
-
         DownLoadImageService service = new DownLoadImageService(this,
                 url,title);
         //启动图片下载线程

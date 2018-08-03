@@ -31,7 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.whu.zengbin.bingocodenews.CodeNewsApp;
 import com.whu.zengbin.bingocodenews.R;
-import com.whu.zengbin.bingocodenews.bean.NewsInfo;
+import com.whu.zengbin.bingocodenews.event.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.CommonUtil;
 
 import java.util.List;

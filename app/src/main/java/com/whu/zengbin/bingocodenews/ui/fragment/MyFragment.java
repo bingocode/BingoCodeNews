@@ -9,16 +9,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.whu.zengbin.bingocodenews.R;
-import com.whu.zengbin.bingocodenews.bean.NewsInfo;
+import com.whu.zengbin.bingocodenews.event.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.CommonUtil;
 import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
-import com.whu.zengbin.bingocodenews.common.SnackbarUtil;
 import com.whu.zengbin.bingocodenews.network.NetWorkMrg;
 import com.whu.zengbin.bingocodenews.ui.activity.ImagesActivity;
 import com.whu.zengbin.bingocodenews.ui.activity.WebviewActivity;

@@ -3,7 +3,6 @@ package com.whu.zengbin.bingocodenews.ui.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,11 +15,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.R;
-import com.whu.zengbin.bingocodenews.bean.NewsInfo;
+import com.whu.zengbin.bingocodenews.event.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 import com.whu.zengbin.bingocodenews.network.NetWorkMrg;
 import com.whu.zengbin.bingocodenews.ui.adapter.MyRecyclerViewAdapter;
@@ -37,8 +35,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapter.OnItemClickListener{
     private static final String TAG = "BC-SearchActivity";
