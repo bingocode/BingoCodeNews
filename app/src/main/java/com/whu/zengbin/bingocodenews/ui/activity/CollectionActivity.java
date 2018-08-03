@@ -46,8 +46,7 @@ public class CollectionActivity extends BaseActivity {
         setContentView(R.layout.activity_collection);
         mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
         mRecyclerView = (SwipeMenuRecyclerView) findViewById(R.id.id_recyclerview);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initNormalToolBar(mToolbar, R.string.save,true);
         initData();
         configRecycleView();
         if (infolist.size() > 0) {
@@ -135,12 +134,4 @@ public class CollectionActivity extends BaseActivity {
 
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
-        return true;
-    }
 }

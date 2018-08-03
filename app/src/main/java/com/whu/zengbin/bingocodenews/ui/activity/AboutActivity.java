@@ -1,9 +1,7 @@
 package com.whu.zengbin.bingocodenews.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.whu.zengbin.bingocodenews.BaseActivity;
@@ -20,17 +18,10 @@ public class AboutActivity extends BaseActivity {
         setContentView(R.layout.activity_about);
         mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
         mVersion = (TextView) findViewById(R.id.version);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initNormalToolBar(mToolbar,R.string.about,true);
+
         mVersion.setText(CommonUtil.getVerName(this.getApplicationContext()));
-
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
-        return true;
-    }
+
 }

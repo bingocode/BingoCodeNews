@@ -49,9 +49,7 @@ public class WebviewActivity extends BaseActivity {
     }
 
     private void configview() {
-        mToolbar.setTitle(title);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initNormalToolBar(mToolbar,title,true);
         configWebView();
     }
     private void configWebView() {
@@ -112,14 +110,6 @@ public class WebviewActivity extends BaseActivity {
             }
         });
         mWebView.loadUrl(url);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
-        return true;
     }
 
 }

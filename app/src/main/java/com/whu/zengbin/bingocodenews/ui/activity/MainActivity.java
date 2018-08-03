@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private void configViews() {
 
         // 设置显示Toolbar
-        setSupportActionBar(mToolbar);
+        initNormalToolBar(mToolbar,R.string.toolbar_title,false);
 
         // 设置Drawerlayout开关指示器，即Toolbar最左边的那个icon
         ActionBarDrawerToggle mActionBarDrawerToggle =
@@ -136,6 +136,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                         break;
                     case R.id.nav_menu_save:
                         startActivity(new Intent(MainActivity.this,CollectionActivity.class));
+                        break;
+                    case R.id.nav_menu_say:
+                        startActivity(new Intent(MainActivity.this,IMActivity.class));
                         break;
                 }
                 // Menu item点击后选中，并关闭Drawerlayout
