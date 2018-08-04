@@ -36,6 +36,10 @@ android {
       signingConfig signingConfigs.config
     }
   }
+
+  lintOptions {
+    abortOnError false
+  }
 }
 
 greendao {
