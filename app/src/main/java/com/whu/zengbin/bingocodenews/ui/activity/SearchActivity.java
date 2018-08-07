@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +17,7 @@ import android.widget.ProgressBar;
 
 import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.event.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 import com.whu.zengbin.bingocodenews.network.NetWorkMrg;
@@ -37,7 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapter.OnItemClickListener{
-    private static final String TAG = "BC-SearchActivity";
+    private static final String TAG = "SearchActivity";
     private Toolbar mToolBar;
     private SearchView mSearchView;
     private ImageView mImgBack;
@@ -98,14 +98,14 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
 
                 int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
                 if (lastVisibleItemPosition + 1 == mRecyclerViewAdapter.getItemCount()) {
-                    Log.d("test", "loading executed");
+                    LogUtil.d("test", "loading executed");
                     if (!isLoading) {
                         isLoading = true;
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 loadResult(mSearchView.getQuery().toString(),true);
-                                Log.d("test", "load more completed");
+                                LogUtil.d("test", "load more completed");
                                 //isLoading = false;
                                 mRecyclerViewAdapter.setIsshowLoadmore(true);
                             }
@@ -165,7 +165,7 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
 
     private void loadResult(String content, boolean isLoadMore) {
         if (isLoadMore) {
-            Log.i(TAG,"LoadMore Log" + page);
+            LogUtil.i(TAG,"LoadMore LogUtil" + page);
             if (TextUtils.isEmpty(content)) {
                 infolist.clear();
                 mProgressBar.setVisibility(View.GONE);
@@ -186,7 +186,7 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
                         JSONArray resultArray = responsejson.optJSONArray(ConstraintUtil.RESULTS);
                         for (int i = 0; i < resultArray.length(); i++) {
                             NewsInfo info = new NewsInfo(resultArray.getJSONObject(i));
-                            Log.i(TAG, "item " + i + info.getType());
+                            LogUtil.i(TAG, "item " + i + info.getType());
                             infolist.add(info);
                         }
                         mRecyclerViewAdapter.notifyDataSetChanged();
@@ -200,11 +200,11 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                    Log.e(TAG, "request search error");
+                    LogUtil.e(TAG, "request search error");
                 }
             });
         } else {
-            Log.i(TAG,"LoadMore false Log" + page);
+            LogUtil.i(TAG,"LoadMore false LogUtil" + page);
             if (TextUtils.isEmpty(content)) {
                 infolist.clear();
                 mProgressBar.setVisibility(View.GONE);
@@ -224,7 +224,7 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
                         infolist.clear();
                         for (int i = 0; i < resultArray.length(); i++) {
                             NewsInfo info = new NewsInfo(resultArray.getJSONObject(i));
-                            Log.i(TAG, "item " + i + info.getType());
+                            LogUtil.i(TAG, "item " + i + info.getType());
                             infolist.add(info);
                         }
                         mRecyclerViewAdapter.notifyDataSetChanged();
@@ -238,7 +238,7 @@ public class SearchActivity extends BaseActivity implements MyRecyclerViewAdapte
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                    Log.e(TAG, "request search error");
+                    LogUtil.e(TAG, "request search error");
                 }
             });
         }

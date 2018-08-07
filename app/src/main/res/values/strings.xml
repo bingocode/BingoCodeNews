@@ -16,5 +16,7 @@
   <string name="about_pay">欢迎支付宝打赏</string>
   <string name="save">收藏</string>
   <string name="talk">畅聊</string>
+  <string name="send">发送</string>
+
 
 </resources>

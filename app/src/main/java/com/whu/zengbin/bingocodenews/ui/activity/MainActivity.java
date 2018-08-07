@@ -13,13 +13,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.common.PermissionUtil;
 import com.whu.zengbin.bingocodenews.common.SnackbarUtil;
 import com.whu.zengbin.bingocodenews.ui.adapter.MyViewPagerAdapter;
@@ -33,7 +33,7 @@ import cn.jzvd.JZVideoPlayer;
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
-    private final static String TAG = "BC-MainActivity";
+    private final static String TAG = "MainActivity";
     //初始化各种控件，照着xml中的顺序写
     private DrawerLayout mDrawerLayout;
     private CoordinatorLayout mCoordinatorLayout;
@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate");
+        LogUtil.i(TAG, "onCreate");
         setContentView(R.layout.activity_my);
 
         // 初始化各种控件
@@ -190,33 +190,33 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     protected void onStart() {
-        Log.i(TAG, "onStart");
+        LogUtil.i(TAG, "onStart");
         super.onStart();
     }
 
 
     @Override
     protected void onResume() {
-        Log.i(TAG, "onResume");
+        LogUtil.i(TAG, "onResume");
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(TAG, "onPause");
+        LogUtil.i(TAG, "onPause");
         JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
     protected void onStop() {
-        Log.i(TAG, "onStop");
+        LogUtil.i(TAG, "onStop");
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Log.i(TAG, "onDestroy");
+        LogUtil.i(TAG, "onDestroy");
         super.onDestroy();
     }
 

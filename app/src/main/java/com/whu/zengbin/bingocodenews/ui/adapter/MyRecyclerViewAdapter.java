@@ -40,7 +40,7 @@ import java.util.List;
  * Created by Monkey on 2015/6/29.
  */
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-  private static final String TAG = "BC-MyRecyclerViewAdapter";
+  private static final String TAG = "MyRecyclerViewAdapter";
   private static final int TYPE_ITEM = 0;
   private static final int TYPE_FOOTER = 1;
   final NewsInfoDao newsInfoDao = CodeNewsApp.getmDaoSession().getNewsInfoDao();

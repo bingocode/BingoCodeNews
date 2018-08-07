@@ -22,8 +22,6 @@ package com.whu.zengbin.bingocodenews.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ import java.util.List;
  * Created by Monkey on 2015/6/29.
  */
 public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
-  private static final String TAG = "BC-MyViewPagerAdapter";
+  private static final String TAG = "MyViewPagerAdapter";
 
   private String[] mTitles;
   private List<Fragment> mFragments;

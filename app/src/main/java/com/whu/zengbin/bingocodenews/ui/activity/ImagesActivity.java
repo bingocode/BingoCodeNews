@@ -9,7 +9,6 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +24,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.whu.zengbin.bingocodenews.R;
 import com.whu.zengbin.bingocodenews.common.DownLoadImageService;
+import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.common.PermissionUtil;
 import com.whu.zengbin.bingocodenews.ui.view.FloatViewPager;
 
@@ -36,7 +36,7 @@ import com.whu.zengbin.bingocodenews.ui.view.FloatViewPager;
 
 public class ImagesActivity extends AppCompatActivity {
 
-    private static final String TAG = "BC-ImagesActivity";
+    private static final String TAG = "ImagesActivity";
     public static final String URL_IMG = "img_url";
     public static final String CONTENT_TITLE = "content_title";
 
@@ -156,7 +156,7 @@ public class ImagesActivity extends AppCompatActivity {
     }
 
     private void downLoadImg(String url, String title) {
-        Log.i(TAG, "开始保存");
+        LogUtil.i(TAG, "开始保存");
         DownLoadImageService service = new DownLoadImageService(this,
                 url,title);
         //启动图片下载线程

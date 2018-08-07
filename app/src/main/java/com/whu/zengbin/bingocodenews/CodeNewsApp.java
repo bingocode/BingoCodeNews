@@ -1,11 +1,11 @@
 package com.whu.zengbin.bingocodenews;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.bingo.greendao.gen.DaoMaster;
 import com.bingo.greendao.gen.DaoSession;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.common.ThreadUtil;
 
 /**
@@ -13,13 +13,13 @@ import com.whu.zengbin.bingocodenews.common.ThreadUtil;
  */
 
 public class CodeNewsApp extends Application {
-    private static final String TAG = "BC-CodeNewsApp";
+    private static final String TAG = "CodeNewsApp";
     private static DaoSession mDaoSession;
     protected static CodeNewsApp mInstance;
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG,"Application onCreate");
+        LogUtil.i(TAG,"Application onCreate");
         ThreadUtil.startup();
         mDaoSession = new DaoMaster(new DaoMaster.DevOpenHelper(this,"code_news.db").getWritableDatabase()).newSession();
         ViewTarget.setTagId(R.id.tag_glide);

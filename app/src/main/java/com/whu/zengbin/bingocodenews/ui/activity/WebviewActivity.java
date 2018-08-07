@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebResourceError;
@@ -20,12 +19,13 @@ import android.widget.RelativeLayout;
 import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.R;
 import com.whu.zengbin.bingocodenews.common.CommonUtil;
+import com.whu.zengbin.bingocodenews.common.LogUtil;
 
 public class WebviewActivity extends BaseActivity {
     public static final String DESC_TITLE = "desc_title";
     public static final String URL_CONTENT = "url_content";
 
-    public static final String TAG = "BC-WebviewActivity";
+    public static final String TAG = "WebviewActivity";
     private Toolbar mToolbar;
     private WebView mWebView;
     private ProgressBar mProgressbar;
@@ -78,7 +78,7 @@ public class WebviewActivity extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                Log.i(TAG, "load start");
+                LogUtil.i(TAG, "load start");
 
                 loadfailed_ll.setVisibility(View.GONE);
                 mProgressbar.setVisibility(View.VISIBLE);
@@ -89,9 +89,9 @@ public class WebviewActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                Log.i(TAG, "load finished");
+                LogUtil.i(TAG, "load finished");
                 if (!isloadFaild) {
-                    Log.i(TAG, "load finished");
+                    LogUtil.i(TAG, "load finished");
                     loadfailed_ll.setVisibility(View.GONE);
                     mProgressbar.setVisibility(View.GONE);
                     mWebView.setVisibility(View.VISIBLE);
@@ -101,7 +101,7 @@ public class WebviewActivity extends BaseActivity {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                Log.i(TAG, "load error");
+                LogUtil.i(TAG, "load error");
 
                 loadfailed_ll.setVisibility(View.VISIBLE);
                 mProgressbar.setVisibility(View.GONE);

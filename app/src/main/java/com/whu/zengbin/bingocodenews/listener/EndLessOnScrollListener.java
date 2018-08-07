@@ -5,12 +5,12 @@ package com.whu.zengbin.bingocodenews.listener;
  */
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import com.whu.zengbin.bingocodenews.common.LogUtil;
 
 /** * Created by wnw on 16-5-26. */
 public abstract class EndLessOnScrollListener extends  RecyclerView.OnScrollListener{
 
-    private static final String TAG = "BC-EndLessOnScrollListener";
+    private static final String TAG = "EndLessOnScrollListener";
 
     //声明一个LinearLayoutManager
     private LinearLayoutManager mLinearLayoutManager;
@@ -42,11 +42,11 @@ public abstract class EndLessOnScrollListener extends  RecyclerView.OnScrollList
         visibleItemCount = recyclerView.getChildCount();
         totalItemCount = mLinearLayoutManager.getItemCount();
         firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
-        Log.i(TAG,"Aload1");
+        LogUtil.i(TAG,"Aload1");
         if(loading){
-            Log.i(TAG,"Aload2");
+            LogUtil.i(TAG,"Aload2");
             if(totalItemCount > previousTotal){
-                Log.i(TAG,"Aload3");
+                LogUtil.i(TAG,"Aload3");
                 //说明数据已经加载结束
                 loading = false;
                 previousTotal = totalItemCount;
@@ -54,7 +54,7 @@ public abstract class EndLessOnScrollListener extends  RecyclerView.OnScrollList
         }
         //这里需要好好理解
         if (!loading && totalItemCount-visibleItemCount <= firstVisibleItem){
-            Log.i(TAG,"Aload4");
+            LogUtil.i(TAG,"Aload4");
             onLoadMore();
             loading = true;
         }

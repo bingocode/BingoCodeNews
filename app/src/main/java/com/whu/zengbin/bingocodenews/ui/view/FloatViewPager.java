@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -13,7 +12,7 @@ import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
 import com.whu.zengbin.bingocodenews.R;
-
+import com.whu.zengbin.bingocodenews.common.LogUtil;
 
 public class FloatViewPager extends ViewPager {
     private static final String TAG = "FloatViewPager";
@@ -62,17 +61,17 @@ public class FloatViewPager extends ViewPager {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.d(TAG, "dispatchTouchEvent()" + ev);
+        LogUtil.d(TAG, "dispatchTouchEvent()" + ev);
         if (mFlinging || mScrolling) {
-            Log.d(TAG, "not need handle event when view is anim");
+            LogUtil.d(TAG, "not need handle event when view is anim");
             return true;
         }
         if (mDisallowInterruptHandler != null && mDisallowInterruptHandler.disallowInterrupt()) {
-            Log.d(TAG, "disallow interrupt,just handle by super");
+            LogUtil.d(TAG, "disallow interrupt,just handle by super");
             return super.dispatchTouchEvent(ev);
         }
         int actionMask = ev.getActionMasked();
-        Log.d(TAG, "actionMask=" + actionMask + "mTouchState=" + mTouchState);
+        LogUtil.d(TAG, "actionMask=" + actionMask + "mTouchState=" + mTouchState);
         switch (actionMask) {
             case MotionEvent.ACTION_DOWN:
                 mTouchState = TouchState.NONE;
@@ -80,9 +79,9 @@ public class FloatViewPager extends ViewPager {
                 mLastMotionY = ev.getRawY();
                 mLastDownX = ev.getRawX();
                 mLastDownY = ev.getRawY();
-                Log.d(TAG, "mLastMotionX=" + mLastMotionX);
-                Log.d(TAG, "ev.getRawX()=" + ev.getRawX());
-                Log.d(TAG, "mLastMotionY=" + mLastMotionY);
+                LogUtil.d(TAG, "mLastMotionX=" + mLastMotionX);
+                LogUtil.d(TAG, "ev.getRawX()=" + ev.getRawX());
+                LogUtil.d(TAG, "mLastMotionY=" + mLastMotionY);
                 break;
             case MotionEvent.ACTION_MOVE:
                 final float x = ev.getRawX();
@@ -90,11 +89,11 @@ public class FloatViewPager extends ViewPager {
                 final float xDistance = Math.abs(x - mLastDownX);
                 final float y = ev.getRawY();
                 final float yDistance = Math.abs(y - mLastDownY);
-                Log.d(TAG, "ev.getRawX()=" + x);
-                Log.d(TAG, "mLastMotionX=" + mLastMotionX);
-                Log.d(TAG, "ev.getRawY()=" + y);
-                Log.d(TAG, "mLastMotionY=" + mLastMotionY);
-                Log.d(TAG, "xDistance=" + xDistance + "yDistance=" + yDistance + "mTouchSlop=" + mTouchSlop);
+                LogUtil.d(TAG, "ev.getRawX()=" + x);
+                LogUtil.d(TAG, "mLastMotionX=" + mLastMotionX);
+                LogUtil.d(TAG, "ev.getRawY()=" + y);
+                LogUtil.d(TAG, "mLastMotionY=" + mLastMotionY);
+                LogUtil.d(TAG, "xDistance=" + xDistance + "yDistance=" + yDistance + "mTouchSlop=" + mTouchSlop);
 
                 //判断触摸方向
                 if (mTouchState == TouchState.NONE) {
@@ -136,7 +135,7 @@ public class FloatViewPager extends ViewPager {
         if (mTouchState == TouchState.VERTICAL_MOVE) {
             return true;
         } else {
-            Log.d(TAG, "super.dispatchTouchEvent()");
+            LogUtil.d(TAG, "super.dispatchTouchEvent()");
             return super.dispatchTouchEvent(ev);
         }
     }
@@ -149,7 +148,7 @@ public class FloatViewPager extends ViewPager {
             //uncomment if you really want to see these errors
             //e.printStackTrace();
             //PhotoView可能会导致这里报异常，它作者推荐的写法
-            Log.e(TAG, e.toString());
+            LogUtil.e(TAG, e.toString());
             return false;
         }
     }
@@ -177,21 +176,21 @@ public class FloatViewPager extends ViewPager {
 
     @Override
     public void computeScroll() {
-        Log.d(TAG, "mScrolling=" + mScrolling + "mFlinging=" + mFlinging);
+        LogUtil.d(TAG, "mScrolling=" + mScrolling + "mFlinging=" + mFlinging);
         if (mScroller.computeScrollOffset()) {
             final int x = mScroller.getCurrX();
             final int y = mScroller.getCurrY();
-            Log.d(TAG, "mScroller.getCurrX()=" + x + "mScroller.getCurrY()=" + y);
+            LogUtil.d(TAG, "mScroller.getCurrX()=" + x + "mScroller.getCurrY()=" + y);
             final int dx = x - getLeft();
             final int dy = y - getTop();
-            Log.d(TAG, " moveTopView() dx=" + dx + "dy=" + dy);
+            LogUtil.d(TAG, " moveTopView() dx=" + dx + "dy=" + dy);
             move(false, dx, dy);
             if (mFlinging && mPositionListener != null && dy == 0) {
                 mPositionListener.onFlingOutFinish();
             }
             ViewCompat.postInvalidateOnAnimation(this);
         } else {
-            Log.d(TAG, "computeScrollOffset()=false");
+            LogUtil.d(TAG, "computeScrollOffset()=false");
             mScrolling = false;
             super.computeScroll();
         }
@@ -199,12 +198,12 @@ public class FloatViewPager extends ViewPager {
     }
 
     private void move(boolean needHorizontalMove, float deltaX, float deltaY) {
-        Log.d(TAG, "move()deltaX=" + deltaX + "deltaY=" + deltaY);
+        LogUtil.d(TAG, "move()deltaX=" + deltaX + "deltaY=" + deltaY);
         if (mInitLeft == Integer.MIN_VALUE || mInitTop == Integer.MIN_VALUE || mInitBottom == Integer.MIN_VALUE) {
             mInitLeft = getLeft();
             mInitTop = getTop();
             mInitBottom = getBottom();
-            Log.d(TAG, "mInitLeft=" + mInitLeft + "mInitTop=" + mInitTop);
+            LogUtil.d(TAG, "mInitLeft=" + mInitLeft + "mInitTop=" + mInitTop);
         }
         if (needHorizontalMove) {
             offsetLeftAndRight((int) deltaX);
@@ -216,7 +215,7 @@ public class FloatViewPager extends ViewPager {
     }
 
     public void startScrollTopView(int finalLeft, int finalTop, int duration) {
-        Log.d(TAG, "startScrollTopView finalLeft=" + finalLeft + "finalTop" + finalTop);
+        LogUtil.d(TAG, "startScrollTopView finalLeft=" + finalLeft + "finalTop" + finalTop);
         final int startLeft = getLeft();
         final int startTop = getTop();
         final int dx = finalLeft - startLeft;

@@ -3,7 +3,6 @@ package com.whu.zengbin.bingocodenews.ui.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.whu.zengbin.bingocodenews.CodeNewsApp;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.event.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.CommonUtil;
 
@@ -26,7 +26,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  */
 
 public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-private static final String TAG = "BC-VideoRecyclerViewAdapter";
+private static final String TAG = "VideoRecyclerViewAdapter";
 private static final int TYPE_ITEM = 0;
 private static final int TYPE_FOOTER = 1;
 final NewsInfoDao newsInfoDao = CodeNewsApp.getmDaoSession().getNewsInfoDao();
@@ -93,7 +93,7 @@ public interface OnItemClickListener {
                 });
             }
             final NewsInfo info = mDatas.get(position);
-            Log.i(TAG, "info id:" + info.getId() +"info desc:" + info.getDesc());
+            LogUtil.i(TAG, "info id:" + info.getId() +"info desc:" + info.getDesc());
             ((VideoViewHolder)holder).mTextView.setText(info.getDesc());
             ((VideoViewHolder)holder).mTimeTv.setText(info.getPublishedAt());
             String imgurl = info.getImages() + "?imageView2/0/w/180";

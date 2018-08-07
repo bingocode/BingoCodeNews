@@ -27,7 +27,7 @@ import java.io.IOException;
  */
 
 public class DownLoadImageService implements Runnable {
-    private static final String TAG = "BC-DownLoadImageService";
+    private static final String TAG = "DownLoadImageService";
     private String url;
     private Context context;
     private File currentFile;
