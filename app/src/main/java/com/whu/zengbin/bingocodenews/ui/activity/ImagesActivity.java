@@ -43,15 +43,10 @@ public class ImagesActivity extends AppCompatActivity {
     RelativeLayout mYfBottomLayout;
     private View mBackground;
     FloatViewPager mViewPager;
-    private PhotoView mCurrentPhoto;
     private TextView mTitletv;
     private ImageView mDownLoad;
     private int mSellectIndex = 0;
-    private MotionEvent mLastMoveEvent;
-    private SimpleTarget target;
     private String title;
-    private Bitmap bitmap;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
