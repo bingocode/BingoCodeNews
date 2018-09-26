@@ -7,7 +7,7 @@
     android:orientation="vertical"
     >
 
-  <com.whu.zengbin.bingocodenews.ui.view.RoundedImageView
+  <com.whu.zengbin.bingocodenews.view.RoundedImageView
       android:id="@+id/id_header_face"
       android:layout_width="110dp"
       android:layout_height="110dp"

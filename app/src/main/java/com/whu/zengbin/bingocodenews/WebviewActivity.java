@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.ui.activity;
+package com.whu.zengbin.bingocodenews;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.ui.activity;
+package com.whu.zengbin.bingocodenews.collect;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,9 @@ import com.bingo.greendao.gen.NewsInfoDao;
 import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.CodeNewsApp;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.WebviewActivity;
 import com.whu.zengbin.bingocodenews.event.NewsInfo;
-import com.whu.zengbin.bingocodenews.ui.adapter.MyRecyclerViewAdapter;
+import com.whu.zengbin.bingocodenews.adapter.MyRecyclerViewAdapter;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;

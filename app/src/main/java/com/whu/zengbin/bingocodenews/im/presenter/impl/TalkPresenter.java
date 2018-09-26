@@ -1,14 +1,7 @@
-package com.whu.zengbin.bingocodenews.presenter.impl;
+package com.whu.zengbin.bingocodenews.im.presenter.impl;
 
-import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.common.ThreadUtil;
-import com.whu.zengbin.bingocodenews.presenter.ITalk;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import com.whu.zengbin.bingocodenews.im.presenter.ITalk;
 
 /**
  * 创建时间: 2018/08/07 10:24 <br>

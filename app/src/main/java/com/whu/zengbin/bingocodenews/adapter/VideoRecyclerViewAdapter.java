@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.ui.adapter;
+package com.whu.zengbin.bingocodenews.adapter;
 
 import android.content.Context;
 import android.net.Uri;

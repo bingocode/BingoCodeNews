@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.ui.fragment;
+package com.whu.zengbin.bingocodenews;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,14 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.adapter.MyRecyclerViewAdapter;
+import com.whu.zengbin.bingocodenews.adapter.MyStaggeredViewAdapter;
 import com.whu.zengbin.bingocodenews.event.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.CommonUtil;
 import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 import com.whu.zengbin.bingocodenews.network.NetWorkMrg;
-import com.whu.zengbin.bingocodenews.ui.activity.ImagesActivity;
-import com.whu.zengbin.bingocodenews.ui.activity.WebviewActivity;
-import com.whu.zengbin.bingocodenews.ui.adapter.MyRecyclerViewAdapter;
-import com.whu.zengbin.bingocodenews.ui.adapter.MyStaggeredViewAdapter;
+import com.whu.zengbin.bingocodenews.image.ImagesActivity;
+import com.whu.zengbin.bingocodenews.WebviewActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, MyRecyclerViewAdapter.OnItemClickListener, MyStaggeredViewAdapter.OnItemClickListener {
+public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
+    MyRecyclerViewAdapter.OnItemClickListener, MyStaggeredViewAdapter.OnItemClickListener {
     private static final String TAG = "MyFragment";
     private View mView;
     private SwipeRefreshLayout mSwipeRefreshLayout;

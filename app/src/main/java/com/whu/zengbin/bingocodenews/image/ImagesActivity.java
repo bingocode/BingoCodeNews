@@ -1,32 +1,24 @@
-package com.whu.zengbin.bingocodenews.ui.activity;
+package com.whu.zengbin.bingocodenews.image;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.whu.zengbin.bingocodenews.R;
 import com.whu.zengbin.bingocodenews.common.DownLoadImageService;
 import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.common.PermissionUtil;
-import com.whu.zengbin.bingocodenews.ui.view.FloatViewPager;
+import com.whu.zengbin.bingocodenews.view.FloatViewPager;
 
 
 /**

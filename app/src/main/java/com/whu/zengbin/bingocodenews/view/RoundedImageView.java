@@ -17,7 +17,7 @@
  *
  */
 
-package com.whu.zengbin.bingocodenews.ui.view;
+package com.whu.zengbin.bingocodenews.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;

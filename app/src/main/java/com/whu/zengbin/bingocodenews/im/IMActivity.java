@@ -1,14 +1,13 @@
-package com.whu.zengbin.bingocodenews.ui.activity;
+package com.whu.zengbin.bingocodenews.im;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.R;
-import com.whu.zengbin.bingocodenews.presenter.ITalk;
-import com.whu.zengbin.bingocodenews.presenter.impl.TalkPresenter;
+import com.whu.zengbin.bingocodenews.im.presenter.ITalk;
+import com.whu.zengbin.bingocodenews.im.presenter.impl.TalkPresenter;
 
 public class IMActivity extends BaseActivity implements ITalk.ITalkView {
   Toolbar mToolbar;

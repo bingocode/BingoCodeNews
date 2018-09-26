@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.presenter.impl;
+package com.whu.zengbin.bingocodenews.im.presenter.impl;
 
 import com.whu.zengbin.bingocodenews.common.LogUtil;
 import java.io.BufferedWriter;

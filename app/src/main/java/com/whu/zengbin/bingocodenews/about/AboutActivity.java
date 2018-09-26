@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.ui.activity;
+package com.whu.zengbin.bingocodenews.about;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;

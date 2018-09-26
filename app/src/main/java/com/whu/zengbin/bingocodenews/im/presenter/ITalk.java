@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.presenter;
+package com.whu.zengbin.bingocodenews.im.presenter;
 
 /**
  * 创建时间: 2018/08/07 10:19 <br>

@@ -6,7 +6,7 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="com.whu.zengbin.bingocodenews.ui.activity.IMActivity">
+  tools:context="com.whu.zengbin.bingocodenews.im.IMActivity">
   <include
     layout="@layout/item_toolbar_normal"
     />

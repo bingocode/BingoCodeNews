@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.ui.activity;
+package com.whu.zengbin.bingocodenews.search;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -17,11 +17,12 @@ import android.widget.ProgressBar;
 
 import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.WebviewActivity;
 import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.event.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
 import com.whu.zengbin.bingocodenews.network.NetWorkMrg;
-import com.whu.zengbin.bingocodenews.ui.adapter.MyRecyclerViewAdapter;
+import com.whu.zengbin.bingocodenews.adapter.MyRecyclerViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

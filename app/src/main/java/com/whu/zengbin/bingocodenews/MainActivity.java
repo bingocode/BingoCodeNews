@@ -1,11 +1,9 @@
-package com.whu.zengbin.bingocodenews.ui.activity;
+package com.whu.zengbin.bingocodenews;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,15 +13,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.whu.zengbin.bingocodenews.BaseActivity;
-import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.about.AboutActivity;
+import com.whu.zengbin.bingocodenews.collect.CollectionActivity;
+import com.whu.zengbin.bingocodenews.im.IMActivity;
+import com.whu.zengbin.bingocodenews.search.SearchActivity;
 import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.common.PermissionUtil;
-import com.whu.zengbin.bingocodenews.common.SnackbarUtil;
-import com.whu.zengbin.bingocodenews.ui.adapter.MyViewPagerAdapter;
-import com.whu.zengbin.bingocodenews.ui.fragment.MyFragment;
+import com.whu.zengbin.bingocodenews.adapter.MyViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

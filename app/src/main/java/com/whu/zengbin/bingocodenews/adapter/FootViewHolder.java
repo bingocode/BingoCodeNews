@@ -1,4 +1,4 @@
-package com.whu.zengbin.bingocodenews.ui.adapter;
+package com.whu.zengbin.bingocodenews.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

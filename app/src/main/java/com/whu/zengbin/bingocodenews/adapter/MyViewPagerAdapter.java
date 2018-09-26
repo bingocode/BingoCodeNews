@@ -17,7 +17,7 @@
  *
  */
 
-package com.whu.zengbin.bingocodenews.ui.adapter;
+package com.whu.zengbin.bingocodenews.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
