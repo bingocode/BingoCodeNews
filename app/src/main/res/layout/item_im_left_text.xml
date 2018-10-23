@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/im_item_textview"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:background="@drawable/chatui_chat_item_bg_left"
+  android:lineSpacingExtra="2dp"
+  android:paddingBottom="12dp"
+  android:paddingLeft="13dp"
+  android:paddingRight="13dp"
+  android:paddingTop="10dp"
+  android:textColor="@color/chatui_chat_msg_text_color"
+  android:textColorLink="@color/chatui_link_text_color_green"
+  android:textSize="16sp"
+  tools:text="喔，这句话喔经常对你讲，喔，这句话喔经常对你讲喔，这句话喔经常对你讲喔，这句话喔经常对你讲喔，这句话喔经常对你讲喔，这句话喔经常对你讲"
+  />

@@ -1,34 +1,40 @@
 package com.whu.zengbin.bingocodenews.im;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
 import com.whu.zengbin.bingocodenews.BaseActivity;
 import com.whu.zengbin.bingocodenews.R;
-import com.whu.zengbin.bingocodenews.im.presenter.ITalk;
-import com.whu.zengbin.bingocodenews.im.presenter.impl.TalkPresenter;
+import com.whu.zengbin.bingocodenews.im.biz.ITalk;
+import com.whu.zengbin.bingocodenews.im.biz.impl.TalkPresenter;
 
 public class IMActivity extends BaseActivity implements ITalk.ITalkView {
   Toolbar mToolbar;
-  Button mSend;
+  IMFragment imFragment;
   ITalk.ITalkPresenter mPresenter;
+  Bundle imExtras;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_im);
     mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
-    mSend = (Button) findViewById(R.id.send);
-    initNormalToolBar(mToolbar,R.string.talk,true);
+
     setPresenter(new TalkPresenter());
-    mSend.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        mPresenter.sendMsg();
-      }
-    });
+    imExtras = getIntent().getExtras();
+    initNormalToolBar(mToolbar, R.string.talk, true);
+    initIMFragment(imExtras);
   }
 
-  @Override public void setPresenter(ITalk.ITalkPresenter presenter) {
+  @Override
+  public void setPresenter(ITalk.ITalkPresenter presenter) {
     mPresenter = presenter;
+  }
+
+  private void initIMFragment(Bundle imExtras) {
+    imFragment = imFragment.newInstance(imExtras);
+    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    ft.replace(R.id.im_fragment_container, imFragment);
+    ft.commitAllowingStateLoss();
   }
 }

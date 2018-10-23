@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/im_chat_input_height"
+  tools:showIn="@layout/fragment_im_layout">
+  <EditText
+    android:id="@+id/edit_input"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:textColor="@color/chatui_chat_msg_text_color"
+    android:layout_weight="1"
+    tools:text="@string/talk"/>
+  <Button
+    android:id="@+id/btn_send"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/chatui_chat_msg_text_color"
+    android:text="发送" />
+</LinearLayout>

@@ -12,4 +12,7 @@
     <color name="fab_red">#ff0000</color>
     <color name="transparent">#00000000</color>
 
+    <color name="chatui_chat_msg_text_color">#394043</color>
+    <color name="chatui_link_text_color_green">#00AE66</color>
+
 </resources>

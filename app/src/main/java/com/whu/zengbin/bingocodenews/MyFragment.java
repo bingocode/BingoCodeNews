@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.whu.zengbin.bingocodenews.R;
 import com.whu.zengbin.bingocodenews.adapter.MyRecyclerViewAdapter;
 import com.whu.zengbin.bingocodenews.adapter.MyStaggeredViewAdapter;
+import com.whu.zengbin.bingocodenews.callback.CallBackListener;
 import com.whu.zengbin.bingocodenews.event.NewsInfo;
 import com.whu.zengbin.bingocodenews.common.CommonUtil;
 import com.whu.zengbin.bingocodenews.common.ConstraintUtil;
@@ -38,152 +39,155 @@ import retrofit2.Response;
 
 public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
     MyRecyclerViewAdapter.OnItemClickListener, MyStaggeredViewAdapter.OnItemClickListener {
-    private static final String TAG = "MyFragment";
-    private View mView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private MyRecyclerViewAdapter mRecyclerViewAdapter;
-    private MyStaggeredViewAdapter mStaggeredAdapter;
-    private static final int SPAN_COUNT = 2;
-    private int flag = 0;
-    private int page = 1;
-    private List<NewsInfo> infolist = new ArrayList<>();
-    private Handler handler = new Handler();
-    private boolean isLoading = false;
+  private static final String TAG = "MyFragment";
+  private View mView;
+  private SwipeRefreshLayout mSwipeRefreshLayout;
+  private RecyclerView mRecyclerView;
+  private RecyclerView.LayoutManager mLayoutManager;
+  private MyRecyclerViewAdapter mRecyclerViewAdapter;
+  private MyStaggeredViewAdapter mStaggeredAdapter;
+  private static final int SPAN_COUNT = 2;
+  private int flag = 0;
+  private int page = 1;
+  private List<NewsInfo> infolist = new ArrayList<>();
+  private Handler handler = new Handler();
+  private boolean isLoading = false;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-      mView = inflater.inflate(R.layout.frag_main, container, false);
-      return mView;
+  @Nullable
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    mView = inflater.inflate(R.layout.frag_main, container, false);
+    return mView;
+  }
+
+  @Override
+  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+
+    mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.id_swiperefreshlayout);
+    mRecyclerView = (RecyclerView) mView.findViewById(R.id.id_recyclerview);
+
+    flag = (int) getArguments().get("flag");
+    configRecyclerView();
+    // 刷新时，指示器旋转后变化的颜色
+    mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
+    mSwipeRefreshLayout.setOnRefreshListener(this);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    if (page == 1) {
+      infolist.clear();
+      loadMore(true);
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-      super.onActivityCreated(savedInstanceState);
-
-      mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.id_swiperefreshlayout);
-      mRecyclerView = (RecyclerView) mView.findViewById(R.id.id_recyclerview);
-
-      flag = (int) getArguments().get("flag");
-      configRecyclerView();
-      // 刷新时，指示器旋转后变化的颜色
-      mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
-      mSwipeRefreshLayout.setOnRefreshListener(this);
+    if (mRecyclerViewAdapter != null) {
+      mRecyclerViewAdapter.notifyDataSetChanged();
     }
+  }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (page == 1) {
-            infolist.clear();
-            loadMore(true);
+  private void configRecyclerView() {
+    if (flag != ConstraintUtil.PHOTO_FLAG) {
+      mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+      mRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(), infolist);
+      mRecyclerViewAdapter.setOnItemClickListener(this);
+      mRecyclerView.setAdapter(mRecyclerViewAdapter);
+      mRecyclerViewAdapter.setIsshowLoadmore(false);
+      mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+          super.onScrollStateChanged(recyclerView, newState);
         }
-        if (mRecyclerViewAdapter != null) {
-            mRecyclerViewAdapter.notifyDataSetChanged();
-        }
-    }
 
-    private void configRecyclerView() {
-        if (flag != ConstraintUtil.PHOTO_FLAG) {
-            mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-            mRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),infolist);
-            mRecyclerViewAdapter.setOnItemClickListener(this);
-            mRecyclerView.setAdapter(mRecyclerViewAdapter);
-            mRecyclerViewAdapter.setIsshowLoadmore(false);
-            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+          super.onScrolled(recyclerView, dx, dy);
+
+          int lastVisibleItemPosition =
+              ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+          if (lastVisibleItemPosition + 1 == mRecyclerViewAdapter.getItemCount()) {
+            if (!isLoading) {
+              isLoading = true;
+              handler.postDelayed(new Runnable() {
                 @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
+                public void run() {
+                  loadMore(true);
+                  mRecyclerViewAdapter.setIsshowLoadmore(true);
                 }
-
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-
-                    int lastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
-                    if (lastVisibleItemPosition + 1 == mRecyclerViewAdapter.getItemCount()) {
-                        if (!isLoading) {
-                            isLoading = true;
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    loadMore(true);
-                                    mRecyclerViewAdapter.setIsshowLoadmore(true);
-                                }
-                            }, 1000);
-                        }
-                    }
-                }
-            });
-
-        } else {
-            mLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
-            mStaggeredAdapter = new MyStaggeredViewAdapter(getActivity(),infolist);
-          mStaggeredAdapter.setOnItemClickListener(this);
-          mRecyclerView.setAdapter(mStaggeredAdapter);
-        }
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        }
-    private void loadMore(final boolean isloadmore){
-        NetWorkMrg.requestNewsInfo(CommonUtil.flagConvertStr(flag), page, new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                mSwipeRefreshLayout.setRefreshing(false);
-                try {
-                    JSONObject responsejson = new JSONObject(response.body().string());
-                    JSONArray resultArray = responsejson.optJSONArray(ConstraintUtil.RESULTS);
-                    for(int i = 0; i < resultArray.length(); i++){
-                        NewsInfo info = new NewsInfo(resultArray.getJSONObject(i));
-                        if (isloadmore) {
-                            infolist.add(info);
-                        } else {
-                            infolist.add(0,info);
-                        }
-                        if (flag != ConstraintUtil.PHOTO_FLAG) {
-                            isLoading = false;
-                            mRecyclerViewAdapter.setIsshowLoadmore(false);
-                            mRecyclerViewAdapter.notifyDataSetChanged();
-                        } else {
-                            mStaggeredAdapter.notifyDataSetChanged();
-                        }
-                    }
-                    page ++;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+              }, 1000);
             }
+          }
+        }
+      });
+    } else {
+      mLayoutManager =
+          new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
+      mStaggeredAdapter = new MyStaggeredViewAdapter(getActivity(), infolist);
+      mStaggeredAdapter.setOnItemClickListener(this);
+      mRecyclerView.setAdapter(mStaggeredAdapter);
+    }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                mSwipeRefreshLayout.setRefreshing(false);
+    mRecyclerView.setLayoutManager(mLayoutManager);
+  }
+
+  private void loadMore(final boolean isloadmore) {
+    CodeNewsApp.getInstance().getmNewsImpl().getNewsInfoList(CommonUtil.flagConvertStr(flag),
+        page, new CallBackListener<ResponseBody>() {
+          @Override
+          public void onResponse(ResponseBody response) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            try {
+              JSONObject responsejson = new JSONObject(response.string());
+              JSONArray resultArray = responsejson.optJSONArray(ConstraintUtil.RESULTS);
+              for (int i = 0; i < resultArray.length(); i++) {
+                NewsInfo info = new NewsInfo(resultArray.getJSONObject(i));
+                if (isloadmore) {
+                  infolist.add(info);
+                } else {
+                  infolist.add(0, info);
+                }
+                if (flag != ConstraintUtil.PHOTO_FLAG) {
+                  isLoading = false;
+                  mRecyclerViewAdapter.setIsshowLoadmore(false);
+                  mRecyclerViewAdapter.notifyDataSetChanged();
+                } else {
+                  mStaggeredAdapter.notifyDataSetChanged();
+                }
+              }
+              page++;
+            } catch (JSONException e) {
+              e.printStackTrace();
+            } catch (IOException e) {
+              e.printStackTrace();
             }
+          }
+
+          @Override
+          public void onError(Throwable e) {
+            mSwipeRefreshLayout.setRefreshing(false);
+          }
         });
-    }
+  }
 
-    @Override
-    public void onRefresh() {
-        loadMore(false);
-    }
+  @Override
+  public void onRefresh() {
+    loadMore(false);
+  }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        NewsInfo info = infolist.get(position);
-        Intent intent;
-        if(flag != ConstraintUtil.PHOTO_FLAG) {
-            intent = new Intent(getContext(), WebviewActivity.class);
-            intent.putExtra(WebviewActivity.DESC_TITLE,info.getDesc());
-            intent.putExtra(WebviewActivity.URL_CONTENT, info.getUrl());
-        } else {
-            intent = new Intent(getContext(), ImagesActivity.class);
-            intent.putExtra(ImagesActivity.URL_IMG,info.getUrl());
-            intent.putExtra(ImagesActivity.CONTENT_TITLE,info.getDesc());
-        }
-        getActivity().startActivity(intent);
+  @Override
+  public void onItemClick(View view, int position) {
+    NewsInfo info = infolist.get(position);
+    Intent intent;
+    if (flag != ConstraintUtil.PHOTO_FLAG) {
+      intent = new Intent(getContext(), WebviewActivity.class);
+      intent.putExtra(WebviewActivity.DESC_TITLE, info.getDesc());
+      intent.putExtra(WebviewActivity.URL_CONTENT, info.getUrl());
+    } else {
+      intent = new Intent(getContext(), ImagesActivity.class);
+      intent.putExtra(ImagesActivity.URL_IMG, info.getUrl());
+      intent.putExtra(ImagesActivity.CONTENT_TITLE, info.getDesc());
     }
+    getActivity().startActivity(intent);
+  }
 }
