@@ -18,6 +18,7 @@ import com.whu.zengbin.bingocodenews.im.biz.impl.TalkPresenter;
 import com.whu.zengbin.bingocodenews.im.tool.IMHelper;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.List;
  * 作者: zengbin <br>
  * 描述: 聊天页面
  */
-public class IMFragment extends Fragment {
+public class IMFragment extends Fragment implements IMInputLayout.InputCallBack {
   private static final String TAG = "IMFragment";
   private LinearLayoutManager mLinearLayoutManager;
 
@@ -73,12 +74,13 @@ public class IMFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     mView = view;
     initView();
-    initData();
+    mPresenter.enterIM();
     EventBus.getDefault().register(this);
   }
 
   @Override
   public void onDestroyView() {
+    mPresenter.quitIM();
     EventBus.getDefault().unregister(this);
     super.onDestroyView();
   }
@@ -87,20 +89,9 @@ public class IMFragment extends Fragment {
     mSwipeRefreshLayout = mView.findViewById(R.id.im_swipe_refresh_layout);
     mIMList = mView.findViewById(R.id.im_list);
     mIMInputViewHolder = new IMInputLayout.IMInputViewHolder(mView.findViewById(R.id.im_input_layout));
-    mTalkView.setPresenter(new TalkPresenter());
+    IMInputLayout.initInputLayout(mIMInputViewHolder, this);
+    mTalkView.setPresenter(new TalkPresenter(getContext()));
     initRecyclerView();
-  }
-
-  private void initData() {
-    List<Msg> mMsgs = new ArrayList<>();
-    for (int i = 0; i< 20; i++) {
-      Msg msg = new Msg();
-      msg.msgFrom = IMHelper.IS_ME;
-      msg.msgType = MsgType.MSG_TEXT;
-      msg.msgContent = "测试消息" + i;
-      mMsgs.add(msg);
-    }
-    mAdapter.setDatas(mMsgs);
   }
 
   private void initRecyclerView() {
@@ -110,8 +101,14 @@ public class IMFragment extends Fragment {
     mIMList.setAdapter(mAdapter);
   }
 
-  @Subscribe
-  public void sendLocalMsg(Msg msg) {
-    Log.i(TAG, "send msg" + msg.msgContent);
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  public void receiveMsg(Msg msg) {
+    Log.i(TAG, "receiveMsg" + msg.msgContent);
+    mAdapter.add(msg);
+  }
+
+  @Override
+  public void onSendClick(Msg msg) {
+    mPresenter.sendIMMsg(msg);
   }
 }

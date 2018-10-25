@@ -8,10 +8,9 @@ import com.whu.zengbin.bingocodenews.R;
 import com.whu.zengbin.bingocodenews.im.biz.ITalk;
 import com.whu.zengbin.bingocodenews.im.biz.impl.TalkPresenter;
 
-public class IMActivity extends BaseActivity implements ITalk.ITalkView {
+public class IMActivity extends BaseActivity{
   Toolbar mToolbar;
   IMFragment imFragment;
-  ITalk.ITalkPresenter mPresenter;
   Bundle imExtras;
 
   @Override
@@ -20,15 +19,9 @@ public class IMActivity extends BaseActivity implements ITalk.ITalkView {
     setContentView(R.layout.activity_im);
     mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
 
-    setPresenter(new TalkPresenter());
     imExtras = getIntent().getExtras();
     initNormalToolBar(mToolbar, R.string.talk, true);
     initIMFragment(imExtras);
-  }
-
-  @Override
-  public void setPresenter(ITalk.ITalkPresenter presenter) {
-    mPresenter = presenter;
   }
 
   private void initIMFragment(Bundle imExtras) {

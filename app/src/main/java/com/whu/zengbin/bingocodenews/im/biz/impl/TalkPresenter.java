@@ -1,6 +1,9 @@
 package com.whu.zengbin.bingocodenews.im.biz.impl;
 
+import android.content.Context;
 import com.whu.zengbin.bingocodenews.common.ThreadUtil;
+import com.whu.zengbin.bingocodenews.im.bean.Msg;
+import com.whu.zengbin.bingocodenews.im.biz.BaseTalkPresenter;
 import com.whu.zengbin.bingocodenews.im.biz.ITalk;
 
 /**
@@ -10,20 +13,27 @@ import com.whu.zengbin.bingocodenews.im.biz.ITalk;
  */
 public class TalkPresenter implements ITalk.ITalkPresenter {
   private static final String TAG = "TalkPresenter";
+  private WebClient mWebClient;
+  private Context mContext;
 
-  @Override
-  public void enterIM() {
-
+  public TalkPresenter(Context context) {
+    this.mContext = context;
   }
 
   @Override
-  public void sendIMMsg() {
+  public void enterIM() {
+    mWebClient = WebClient.getInstance();
+    mWebClient.initWebSocket();
+  }
 
+  @Override
+  public void sendIMMsg(Msg msg) {
+    mWebClient.send(msg.msgContent);
   }
 
   @Override
   public void quitIM() {
-
+    mWebClient.close();
   }
 
   @Override
