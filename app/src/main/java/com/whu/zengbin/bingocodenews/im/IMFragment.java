@@ -106,6 +106,7 @@ public class IMFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
   private void initRecyclerView() {
     mLinearLayoutManager = new LinearLayoutManager(getContext());
     mLinearLayoutManager.setReverseLayout(true);
+    mLinearLayoutManager.setStackFromEnd(true);
     mAdapter = new IMListAdapter(this.getActivity());
     mIMList.setLayoutManager(mLinearLayoutManager);
     mIMList.setAdapter(mAdapter);
