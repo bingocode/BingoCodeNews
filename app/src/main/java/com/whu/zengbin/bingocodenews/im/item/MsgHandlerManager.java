@@ -13,6 +13,7 @@ import com.whu.zengbin.bingocodenews.im.bean.MsgType;
 public class MsgHandlerManager {
   private static final int ITEM_VIEW_TYPE_OFFSET = 2000;
 
+
   private final Context mContext;
   private final SparseArray<IMsgHandlerCreator> mMsgHandlerLeftArray = new SparseArray<>();
   private final SparseArray<IMsgHandlerCreator> mMsgHandlerMiddleArray = new SparseArray<>();
@@ -34,7 +35,7 @@ public class MsgHandlerManager {
         });
 
     // 文字消息（中）
-    mMsgHandlerLeftArray.put(createItemViewType(MsgType.MSG_TEXT, MsgLocation.MSG_MIDDLE),
+    mMsgHandlerMiddleArray.put(createItemViewType(MsgType.MSG_TEXT, MsgLocation.MSG_MIDDLE),
         new IMsgHandlerCreator() {
           @Override
           public BaseItemHandler createHandler(Context context) {
@@ -43,7 +44,7 @@ public class MsgHandlerManager {
         });
 
     // 文字消息（右）
-    mMsgHandlerLeftArray.put(createItemViewType(MsgType.MSG_TEXT, MsgLocation.MSG_RIGHT),
+    mMsgHandlerRightArray.put(createItemViewType(MsgType.MSG_TEXT, MsgLocation.MSG_RIGHT),
         new IMsgHandlerCreator() {
           @Override
           public BaseItemHandler createHandler(Context context) {
@@ -52,14 +53,18 @@ public class MsgHandlerManager {
         });
   }
 
+  /**  msgType:  0 <= msgType < 2000
+   *  viewType：左 = msgType -2000    -2000 <= viewType < 0
+   *            右 = msgType + 2000  2000 <= viewType < 4000
+   *            中 = msgType         0 <= viewType < 2000
+   */
   public BaseItemHandler obtain(@MsgType int viewType) {
-    int location = MsgLocation.MSG_LEFT;
-    if (location == MsgLocation.MSG_LEFT) {
+    if (viewType < 0) {
       return mMsgHandlerLeftArray.get(viewType).createHandler(mContext);
-    } else if (location == MsgLocation.MSG_MIDDLE) {
-      return mMsgHandlerMiddleArray.get(viewType).createHandler(mContext);
-    } else {
+    } else if (viewType >= ITEM_VIEW_TYPE_OFFSET) {
       return mMsgHandlerRightArray.get(viewType).createHandler(mContext);
+    } else {
+      return mMsgHandlerMiddleArray.get(viewType).createHandler(mContext);
     }
   }
 

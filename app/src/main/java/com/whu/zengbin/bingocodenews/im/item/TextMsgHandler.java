@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.whu.zengbin.bingocodenews.R;
 import com.whu.zengbin.bingocodenews.im.bean.Msg;
+import com.whu.zengbin.bingocodenews.im.bean.MsgLocation;
 
 /**
  * 创建时间: 2018/10/12 18:34 <br>
@@ -32,7 +33,13 @@ public class TextMsgHandler extends BaseItemHandler {
 
   @Override
   protected int detailLayoutResId() {
-    return R.layout.item_im_left_text;
+    if (mMsgLocation == MsgLocation.MSG_LEFT) {
+      return R.layout.item_im_left_text;
+    } else if (mMsgLocation == MsgLocation.MSG_RIGHT) {
+      return R.layout.item_im_right_text;
+    } else {
+      return R.layout.item_im_center_text;
+    }
   }
 
 

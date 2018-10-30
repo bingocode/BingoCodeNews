@@ -13,5 +13,5 @@ public interface MsgListener {
    *
    * @param msg
    */
-  void onCmqMsgUpdated(Msg msg);
+  void onMsgUpdated(Msg msg);
 }

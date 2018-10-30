@@ -10,6 +10,6 @@ import java.util.List;
 public class MsgListResult {
   public List<Msg> msgList;
 
-  public int count;
+  public int size;
 
 }

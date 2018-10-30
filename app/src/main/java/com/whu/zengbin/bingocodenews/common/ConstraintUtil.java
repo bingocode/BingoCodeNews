@@ -22,10 +22,16 @@ public class ConstraintUtil {
     public static final String WHO = "who";
     public static final String RESULTS = "results";
     public static final String IMG_SUFFIX_WIDTH = "?imageView2/0/w/";
+    public static final String BASE_IP1 = "192.168.1.13";
+    public static final String BASE_IP2 = "10.33.138.61";
+    public static final String BASE_IP = BASE_IP2;
+
 
     public static String CATAGORY = ANDROID;
-    public static final String BASE_URL = "http://gank.io/api/"; //http://gank.io/api/data/Android/10/1
+    public static final String BASE_NEWS_URL = "http://gank.io/api/"; //http://gank.io/api/data/Android/10/1
    //http://gank.io/api/search/query/listview/category/Android/count/10/page/1
+
+    public static final String BASE_IM_URL = "http://"+ BASE_IP + ":8080/";
 
     public static int ANDROID_FLAG = 0;
     public static int WEB_FLAG = 1;

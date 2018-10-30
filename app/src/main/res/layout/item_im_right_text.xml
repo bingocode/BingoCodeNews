@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/im_item_textview"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:background="@mipmap/chatui_chat_item_bg_left"
+  android:background="@mipmap/chatui_chat_item_bg_right"
   android:lineSpacingExtra="2dp"
   android:paddingBottom="12dp"
   android:paddingLeft="12dp"
   android:paddingRight="12dp"
-  android:maxWidth="255dp"
   android:paddingTop="10dp"
-  android:textColor="@color/chatui_chat_msg_text_color"
-  android:textColorLink="@color/chatui_link_text_color_green"
+  android:textColor="@color/main_white"
+  android:textColorLink="@color/main_white"
+  android:maxWidth="255dp"
   android:textSize="16sp"
-  tools:text="Hello, are you there? Hello, are you there? Hello, are you there? Hello,
-    are you there? Hello, are you there? Hello, are you there? Hello, are you there?"
+  tools:text="喔，这喔，这喔，这喔，这喔，这喔，这喔，这喔，这喔，这喔，这喔，这喔，这喔，这喔，这喔，这喔，这"
   />

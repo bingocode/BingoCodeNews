@@ -11,7 +11,9 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,6 +24,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.whu.zengbin.bingocodenews.CodeNewsApp;
 import com.whu.zengbin.bingocodenews.R;
 
 import java.io.File;
@@ -31,6 +34,8 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -238,6 +243,49 @@ public class CommonUtil {
 
         }
         return "0.0.0.0";
+    }
 
+    /**
+     * 获取手机唯一标识
+     * @return
+     */
+    public static String getUniqueId(){
+        String uniqueId = SpUtil.getInstance().getUniqueId();
+        if (TextUtils.isEmpty(uniqueId)) {
+            String androidID =
+                Settings.Secure.getString(CodeNewsApp.getInstance().getContentResolver(), Settings.Secure.ANDROID_ID);
+            uniqueId = androidID + Build.SERIAL;
+            try {
+                uniqueId = toMD5(uniqueId);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            SpUtil.getInstance().setUniqueId(uniqueId);
+        }
+        return uniqueId;
+    }
+
+
+    private static String toMD5(String text) throws NoSuchAlgorithmException {
+        //获取摘要器 MessageDigest
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        //通过摘要器对字符串的二进制字节数组进行hash计算
+        byte[] digest = messageDigest.digest(text.getBytes());
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < digest.length; i++) {
+            //循环每个字符 将计算结果转化为正整数;
+            int digestInt = digest[i] & 0xff;
+            //将10进制转化为较短的16进制
+            String hexString = Integer.toHexString(digestInt);
+            //转化结果如果是个位数会省略0,因此判断并补0
+            if (hexString.length() < 2) {
+                sb.append(0);
+            }
+            //将循环结果添加到缓冲区
+            sb.append(hexString);
+        }
+        //返回整个结果
+        return sb.toString();
     }
 }

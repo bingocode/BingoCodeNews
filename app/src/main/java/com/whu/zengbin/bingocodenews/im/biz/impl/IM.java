@@ -1,11 +1,16 @@
 package com.whu.zengbin.bingocodenews.im.biz.impl;
 
+import com.whu.zengbin.bingocodenews.common.ThreadUtil;
 import com.whu.zengbin.bingocodenews.im.bean.BaseResponse;
 import com.whu.zengbin.bingocodenews.im.bean.Msg;
 import com.whu.zengbin.bingocodenews.im.bean.MsgListResponse;
 import com.whu.zengbin.bingocodenews.callback.CallBackListener;
 import com.whu.zengbin.bingocodenews.im.biz.IIM;
 import com.whu.zengbin.bingocodenews.im.biz.MsgListener;
+import com.whu.zengbin.bingocodenews.network.NetWorkMrg;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import okhttp3.ResponseBody;
 
 /**
  * 创建时间: 2018/10/22 12:26 <br>
@@ -68,15 +73,24 @@ public class IM implements IIM {
   /**
    * 拉取消息
    *
-   * @param topic_id     指定要拉取的topic
-   * @param start_msg_id 指定要拉取的消息起点msg_id 传0或正数表示拉取消息起点，将返回自start_msg_id开始（不包含start_msg_id）的指定条数的信息
-   *                     传-1表示从最新消息开始拉取
-   * @param limit        指定拉取消息条数，limit不大于100，不小于1。返回条数尽力满足该值。
-   * @param callBack     请求回调
+   * @param page     拉取页数
+   * @param callback     请求回调
    */
   @Override
-  public void fetchIMMsgs(long topic_id, long start_msg_id, int limit,
-      CallBackListener<MsgListResponse> callBack) {
-
+  public void fetchIMMsgs(int page, final CallBackListener callback) {
+    NetWorkMrg.getInstance().getIMApi().fetchRecentMsg(page)
+        .subscribeOn(ThreadUtil.getIMScheduler())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer<ResponseBody>() {
+          @Override
+          public void accept(ResponseBody responseBody) throws Exception {
+            callback.onResponse(responseBody);
+          }
+        }, new Consumer<Throwable>() {
+          @Override
+          public void accept(Throwable throwable) throws Exception {
+            callback.onError(throwable);
+          }
+        });
   }
 }

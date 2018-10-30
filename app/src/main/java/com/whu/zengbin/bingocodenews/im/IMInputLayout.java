@@ -37,11 +37,7 @@ public class IMInputLayout {
       public void onClick(View v) {
         String text = viewHolder.mInputEdit.getText().toString();
         if (!TextUtils.isEmpty(text)) {
-          Msg msg = new Msg();
-          msg.msgContent = text;
-          msg.msgType = MsgType.MSG_TEXT;
-          msg.msgFrom = IMHelper.IS_ME;
-          callBack.onSendClick(msg);
+          callBack.onSendClick(IMHelper.buildMsg(text, MsgType.MSG_TEXT, IMHelper.IS_ME));
           viewHolder.mInputEdit.setText("");
         }
       }

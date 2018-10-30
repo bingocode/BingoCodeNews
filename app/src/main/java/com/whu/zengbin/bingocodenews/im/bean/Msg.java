@@ -7,7 +7,11 @@ package com.whu.zengbin.bingocodenews.im.bean;
  */
 public class Msg {
 
+  public long msgId;
+
   public int msgType;
+
+  public String deviceId;
 
   public String msgContent;
 

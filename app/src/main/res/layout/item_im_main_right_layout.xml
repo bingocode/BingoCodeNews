@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-  xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-  android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:paddingLeft="60dp"
+  android:minHeight="@dimen/im_chat_input_height">
+  <LinearLayout
+    android:id="@+id/im_item_detail_container"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:gravity="end|center_vertical"
+    android:orientation="vertical"
+    />
+  <ImageView
+    android:id="@+id/img_head"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end|top"
+    android:padding="10dp"
+    android:src="@mipmap/ic_im_avatar" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

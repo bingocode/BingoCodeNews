@@ -33,7 +33,13 @@ public class BaseItemViewHolder {
   }
 
   public class RightItemViewHolder {
+    public LinearLayout mIMItemDetailContainer;
+    public ImageView mIvAvatarImage;
     public RightItemViewHolder(View convertView) {
+      mIMItemDetailContainer = (LinearLayout) convertView.findViewById(R.id.im_item_detail_container);
+      mIvAvatarImage = (ImageView) convertView.findViewById(R.id.img_head);
+
+      mIMItemDetailContainer.addView(mDetailView);
     }
   }
 

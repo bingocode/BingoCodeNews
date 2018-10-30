@@ -11,15 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.whu.zengbin.bingocodenews.R;
+import com.whu.zengbin.bingocodenews.callback.CallBackListener;
+import com.whu.zengbin.bingocodenews.common.JsonUtil;
+import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.im.bean.Msg;
+import com.whu.zengbin.bingocodenews.im.bean.MsgListResult;
 import com.whu.zengbin.bingocodenews.im.bean.MsgType;
 import com.whu.zengbin.bingocodenews.im.biz.ITalk;
 import com.whu.zengbin.bingocodenews.im.biz.impl.TalkPresenter;
 import com.whu.zengbin.bingocodenews.im.tool.IMHelper;
+import okhttp3.ResponseBody;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +34,7 @@ import java.util.List;
  * 作者: zengbin <br>
  * 描述: 聊天页面
  */
-public class IMFragment extends Fragment implements IMInputLayout.InputCallBack {
+public class IMFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, IMInputLayout.InputCallBack {
   private static final String TAG = "IMFragment";
   private LinearLayoutManager mLinearLayoutManager;
 
@@ -38,6 +44,7 @@ public class IMFragment extends Fragment implements IMInputLayout.InputCallBack 
   IMListAdapter mAdapter;
   private View mView;
   ITalk.ITalkPresenter mPresenter;
+  private int page = 0;
 
 
   private ITalk.ITalkView mTalkView = new ITalk.ITalkView() {
@@ -89,6 +96,8 @@ public class IMFragment extends Fragment implements IMInputLayout.InputCallBack 
     mSwipeRefreshLayout = mView.findViewById(R.id.im_swipe_refresh_layout);
     mIMList = mView.findViewById(R.id.im_list);
     mIMInputViewHolder = new IMInputLayout.IMInputViewHolder(mView.findViewById(R.id.im_input_layout));
+    mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
+    mSwipeRefreshLayout.setOnRefreshListener(this);
     IMInputLayout.initInputLayout(mIMInputViewHolder, this);
     mTalkView.setPresenter(new TalkPresenter(getContext()));
     initRecyclerView();
@@ -96,6 +105,7 @@ public class IMFragment extends Fragment implements IMInputLayout.InputCallBack 
 
   private void initRecyclerView() {
     mLinearLayoutManager = new LinearLayoutManager(getContext());
+    mLinearLayoutManager.setReverseLayout(true);
     mAdapter = new IMListAdapter(this.getActivity());
     mIMList.setLayoutManager(mLinearLayoutManager);
     mIMList.setAdapter(mAdapter);
@@ -103,12 +113,41 @@ public class IMFragment extends Fragment implements IMInputLayout.InputCallBack 
 
   @Subscribe(threadMode = ThreadMode.MAIN)
   public void receiveMsg(Msg msg) {
-    Log.i(TAG, "receiveMsg" + msg.msgContent);
+    LogUtil.i(TAG, "receiveMsg" + msg.msgContent);
     mAdapter.add(msg);
+  }
+
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  public void receiveMsgList(MsgListResult msgs) {
+    LogUtil.i(TAG, "receiveMsgList: = " + msgs.size);
+    mAdapter.addDatas(msgs.msgList);
   }
 
   @Override
   public void onSendClick(Msg msg) {
     mPresenter.sendIMMsg(msg);
+  }
+
+  @Override
+  public void onRefresh() {
+    mPresenter.fetchIMMsgs(++page, new CallBackListener<ResponseBody>() {
+      @Override
+      public void onResponse(ResponseBody response) {
+        try {
+          String jsonStr = response.string();
+          LogUtil.i(TAG, "open response = " + jsonStr);
+          MsgListResult msgListResult = JsonUtil.fromJson(jsonStr, MsgListResult.class);
+          mAdapter.addDatas(msgListResult.msgList);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        mSwipeRefreshLayout.setRefreshing(false);
+      }
+      @Override
+      public void onError(Throwable e) {
+        LogUtil.i(TAG, "onOpen error: ");
+        mSwipeRefreshLayout.setRefreshing(false);
+      }
+    });
   }
 }

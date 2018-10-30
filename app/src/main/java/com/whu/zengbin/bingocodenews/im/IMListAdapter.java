@@ -24,8 +24,7 @@ public class IMListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
   Context mContext;
   MsgHandlerManager mMsgHandlerManager;
 
-  public void setDatas(@Nullable List<Msg> Msgs) {
-    mMsgs.clear();
+  public void addDatas(@Nullable List<Msg> Msgs) {
     if (Msgs != null && Msgs.size() !=0) {
       mMsgs.addAll(Msgs);
     }
@@ -41,8 +40,8 @@ public class IMListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
   }
 
   public void add(Msg Msg) {
-    mMsgs.add(Msg);
-    notifyItemInserted(mMsgs.size() - 1);
+    mMsgs.add(0, Msg);
+    notifyItemInserted(0);
   }
 
   public IMListAdapter(Context context) {

@@ -14,9 +14,9 @@ public interface IIM {
   /**
    * 进入IM
    *
-   * @param topic 需要监听的topic
+   * @param topic         需要监听的topic
    * @param IMMsgListener 新消息到达监听
-   * @param callback 结果回调
+   * @param callback      结果回调
    */
   void enterIM(long topic, MsgListener IMMsgListener,
       CallBackListener callback);
@@ -24,9 +24,9 @@ public interface IIM {
   /**
    * 退出IM
    *
-   * @param topic 需要取消监听的topic
+   * @param topic         需要取消监听的topic
    * @param IMMsgListener 新消息到达监听
-   * @param callback 结果回调
+   * @param callback      结果回调
    */
   void quitIM(long topic, MsgListener IMMsgListener,
       CallBackListener<BaseResponse> callback);
@@ -34,7 +34,7 @@ public interface IIM {
   /**
    * 发送IM消息
    *
-   * @param msg IM消息对象
+   * @param msg      IM消息对象
    * @param callBack 请求回调
    */
   void sendIMMsg(Msg msg, CallBackListener callBack);
@@ -42,13 +42,8 @@ public interface IIM {
   /**
    * 拉取消息
    *
-   * @param topic_id 指定要拉取的topic
-   * @param start_msg_id 指定要拉取的消息起点msg_id
-   * 传0或正数表示拉取消息起点，将返回自start_msg_id开始（不包含start_msg_id）的指定条数的信息
-   * 传-1表示从最新消息开始拉取
-   * @param limit 指定拉取消息条数，limit不大于100，不小于1。返回条数尽力满足该值。
+   * @param page     指定要拉取的topic
    * @param callBack 请求回调
    */
-  void fetchIMMsgs(long topic_id, long start_msg_id, int limit,
-      CallBackListener<MsgListResponse> callBack);
+  void fetchIMMsgs(int page, CallBackListener<MsgListResponse> callBack);
 }
