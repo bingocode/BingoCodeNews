@@ -8,13 +8,14 @@
     android:id="@+id/edit_input"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:textColor="@color/chatui_chat_msg_text_color"
+    android:textColor="@color/im_msg_text_color"
     android:layout_weight="1"
     tools:text="@string/talk"/>
   <Button
     android:id="@+id/btn_send"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textColor="@color/chatui_chat_msg_text_color"
+    android:background="@color/main_blue_light"
+    android:textColor="@color/main_white"
     android:text="发送" />
 </LinearLayout>

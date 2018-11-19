@@ -212,7 +212,7 @@ public class CommonUtil {
                 ip = getLocalIp();
             }
         }
-        Log.i(TAG, "ipaddress = " + ip);
+        LogUtil.i(TAG, "ipaddress = " + ip);
         return ip;
     }
 

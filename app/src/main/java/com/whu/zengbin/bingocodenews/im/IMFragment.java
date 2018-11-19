@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +15,14 @@ import com.whu.zengbin.bingocodenews.common.JsonUtil;
 import com.whu.zengbin.bingocodenews.common.LogUtil;
 import com.whu.zengbin.bingocodenews.im.bean.Msg;
 import com.whu.zengbin.bingocodenews.im.bean.MsgListResult;
-import com.whu.zengbin.bingocodenews.im.bean.MsgType;
 import com.whu.zengbin.bingocodenews.im.biz.ITalk;
 import com.whu.zengbin.bingocodenews.im.biz.impl.TalkPresenter;
-import com.whu.zengbin.bingocodenews.im.tool.IMHelper;
 import okhttp3.ResponseBody;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,8 +40,6 @@ public class IMFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
   IMListAdapter mAdapter;
   private View mView;
   ITalk.ITalkPresenter mPresenter;
-  private int page = 0;
-
 
   private ITalk.ITalkView mTalkView = new ITalk.ITalkView() {
     @Override
@@ -56,8 +50,17 @@ public class IMFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
         return;
       }
     }
-  };
 
+    @Override
+    public void onRefreshComplete() {
+      mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void addMsgs(List<Msg> msgs) {
+      mAdapter.addDatas(msgs);
+    }
+  };
 
   public IMFragment() {
 
@@ -99,7 +102,7 @@ public class IMFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
     mSwipeRefreshLayout.setColorSchemeResources(R.color.main_blue_light, R.color.main_blue_dark);
     mSwipeRefreshLayout.setOnRefreshListener(this);
     IMInputLayout.initInputLayout(mIMInputViewHolder, this);
-    mTalkView.setPresenter(new TalkPresenter(getContext()));
+    mTalkView.setPresenter(new TalkPresenter(mTalkView));
     initRecyclerView();
   }
 
@@ -113,15 +116,9 @@ public class IMFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN)
-  public void receiveMsg(Msg msg) {
+  public void receiveMsg(Msg msg) { // 收到消息
     LogUtil.i(TAG, "receiveMsg" + msg.msgContent);
     mAdapter.add(msg);
-  }
-
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  public void receiveMsgList(MsgListResult msgs) {
-    LogUtil.i(TAG, "receiveMsgList: = " + msgs.size);
-    mAdapter.addDatas(msgs.msgList);
   }
 
   @Override
@@ -131,24 +128,6 @@ public class IMFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
 
   @Override
   public void onRefresh() {
-    mPresenter.fetchIMMsgs(++page, new CallBackListener<ResponseBody>() {
-      @Override
-      public void onResponse(ResponseBody response) {
-        try {
-          String jsonStr = response.string();
-          LogUtil.i(TAG, "open response = " + jsonStr);
-          MsgListResult msgListResult = JsonUtil.fromJson(jsonStr, MsgListResult.class);
-          mAdapter.addDatas(msgListResult.msgList);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-        mSwipeRefreshLayout.setRefreshing(false);
-      }
-      @Override
-      public void onError(Throwable e) {
-        LogUtil.i(TAG, "onOpen error: ");
-        mSwipeRefreshLayout.setRefreshing(false);
-      }
-    });
+    mPresenter.fetchIMMsgs();
   }
 }

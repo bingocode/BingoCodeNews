@@ -6,8 +6,10 @@ import com.bingo.greendao.gen.DaoMaster;
 import com.bingo.greendao.gen.DaoSession;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.whu.zengbin.bingocodenews.common.LogUtil;
+import com.whu.zengbin.bingocodenews.common.NetworkChangeReceiver;
 import com.whu.zengbin.bingocodenews.common.ThreadUtil;
 import com.whu.zengbin.bingocodenews.im.biz.impl.IM;
+import com.whu.zengbin.bingocodenews.im.biz.impl.WebClient;
 import com.whu.zengbin.bingocodenews.network.NetWorkMrg;
 import com.whu.zengbin.bingocodenews.news.NewsImpl;
 
@@ -20,8 +22,12 @@ public class CodeNewsApp extends Application {
     private static DaoSession mDaoSession;
     protected static CodeNewsApp mInstance;
     private NewsImpl mNewsImpl;
+    private WebClient mWebClient;
+
     private IM mIMImpl;
     private NetWorkMrg mNetNetWorkMrg;
+    private NetworkChangeReceiver networkChangeReceiver;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -34,6 +40,8 @@ public class CodeNewsApp extends Application {
         mIMImpl = IM.getInstance();
         mNetNetWorkMrg = NetWorkMrg.getInstance();
         mNetNetWorkMrg.init();
+        mWebClient = WebClient.getInstance();
+        mWebClient.initWebSocket();
     }
 
     public static DaoSession getmDaoSession(){
@@ -51,7 +59,13 @@ public class CodeNewsApp extends Application {
         return mNewsImpl;
     }
 
+    public WebClient getWebClient() {
+        return mWebClient;
+    }
+
     public IM getmIMImpl() {
         return mIMImpl;
     }
+
+
 }

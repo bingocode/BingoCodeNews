@@ -4,6 +4,8 @@ import com.whu.zengbin.bingocodenews.callback.CallBackListener;
 import com.whu.zengbin.bingocodenews.im.bean.Msg;
 import okhttp3.ResponseBody;
 
+import java.util.List;
+
 /**
  * 创建时间: 2018/08/07 10:19 <br>
  * 作者: zengbin <br>
@@ -14,6 +16,9 @@ public interface ITalk {
   interface ITalkView {
     void setPresenter(ITalkPresenter presenter);
 
+    void onRefreshComplete();
+
+    void addMsgs(List<Msg> msgs);
 
   }
 
@@ -25,7 +30,7 @@ public interface ITalk {
 
     void quitIM();
 
-    void fetchIMMsgs(int page, CallBackListener<ResponseBody> callback);
+    void fetchIMMsgs();
 
   }
 
