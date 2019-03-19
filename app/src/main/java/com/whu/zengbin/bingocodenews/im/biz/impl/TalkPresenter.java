@@ -84,7 +84,7 @@ public class TalkPresenter implements ITalk.ITalkPresenter {
 
   @Override
   public void sendIMMsg(Msg msg) {
-    CodeNewsApp.getInstance().getWebClient().sendMessage(msg);
+    CodeNewsApp.getInstance().getmIMImpl().sendIMMsg(msg, null);
   }
 
   @Override

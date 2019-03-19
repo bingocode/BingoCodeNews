@@ -1,5 +1,6 @@
 package com.whu.zengbin.bingocodenews.im.biz.impl;
 
+import com.whu.zengbin.bingocodenews.CodeNewsApp;
 import com.whu.zengbin.bingocodenews.common.ThreadUtil;
 import com.whu.zengbin.bingocodenews.im.bean.BaseResponse;
 import com.whu.zengbin.bingocodenews.im.bean.Msg;
@@ -67,7 +68,7 @@ public class IM implements IIM {
    */
   @Override
   public void sendIMMsg(Msg msg, CallBackListener callBack) {
-
+    CodeNewsApp.getInstance().getWebClient().sendMessage(msg);
   }
 
   /**

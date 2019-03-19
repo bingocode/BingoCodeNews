@@ -22,9 +22,9 @@ public class ConstraintUtil {
     public static final String WHO = "who";
     public static final String RESULTS = "results";
     public static final String IMG_SUFFIX_WIDTH = "?imageView2/0/w/";
-    public static final String BASE_IP1 = "192.168.1.13";
-    public static final String BASE_IP2 = "10.33.138.61";
-    public static final String BASE_IP3 = "39.107.71.82";
+    public static final String BASE_IP1 = "192.168.1.13"; // 家本地地址
+    public static final String BASE_IP2 = "10.33.138.61"; // 公司本地地址
+    public static final String BASE_IP3 = "39.107.71.82"; // 线上地址
     public static final String BASE_IP = BASE_IP3;
 
 
