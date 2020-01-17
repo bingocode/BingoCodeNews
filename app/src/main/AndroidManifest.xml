@@ -39,7 +39,8 @@
       android:enabled="true"
       android:exported="true" />
 
-    <activity android:name=".im.IMActivity"></activity>
+    <activity android:name=".im.IMActivity" />
+    <activity android:name=".ui.qa.QaActivity"></activity>
   </application>
 
 </manifest>

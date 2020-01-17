@@ -12,5 +12,9 @@
       android:id="@+id/nav_menu_say"
       android:icon="@mipmap/icon_nav_talk"
       android:title="@string/talk"/>
+    <item
+      android:id="@+id/nav_menu_qa"
+      android:icon="@mipmap/icon_search"
+      android:title="@string/talk"/>
   </group>
 </menu>
